@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Vybor — честные розыгрыши в Instagram</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --bg: #17111f;
+    --bg-soft: #1f1830;
+    --panel: #241c34;
+    --line: #372c4a;
+    --gold: #ffc857;
+    --coral: #ff6f5e;
+    --text: #f3ede4;
+    --text-dim: #a89bc0;
+    --mono: #d9c9ff;
+    --radius: 18px;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #2c1f45 0%, transparent 60%),
+      radial-gradient(1000px 500px at 110% 10%, #3a1f3f 0%, transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    padding:40px 20px 80px;
+  }
+  .wrap{ max-width:920px; margin:0 auto; }
+
+  header.hero{ text-align:center; margin-bottom:48px; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:14px;
+  }
+  h1{
+    font-family:'Unbounded', sans-serif;
+    font-weight:800;
+    font-size:clamp(32px, 6vw, 54px);
+    line-height:1.05;
+    margin:0 0 14px;
+    letter-spacing:-0.01em;
+  }
+  h1 span{ color:var(--coral); }
+  .sub{
+    color:var(--text-dim); font-size:16px; max-width:520px; margin:0 auto;
+  }
+
+  .steps{
+    display:flex; justify-content:center; gap:6px; margin:28px 0 44px;
+    font-family:'JetBrains Mono', monospace; font-size:13px;
+  }
+  .step-chip{
+    padding:7px 14px; border-radius:999px; border:1px solid var(--line);
+    color:var(--text-dim); background:var(--bg-soft);
+    transition:.25s;
+  }
+  .step-chip.active{ border-color:var(--gold); color:var(--gold); }
+  .step-chip.done{ border-color:#5c9e6a; color:#7fce8c; }
+
+  .panel{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:32px;
+    margin-bottom:24px;
+  }
+  .panel h2{
+    font-family:'Unbounded', sans-serif; font-size:20px; font-weight:600;
+    margin:0 0 6px;
+  }
+  .panel .hint{ color:var(--text-dim); font-size:14px; margin:0 0 20px; line-height:1.5; }
+
+  textarea{
+    width:100%; min-height:180px; background:var(--bg);
+    border:1px solid var(--line); border-radius:12px; color:var(--text);
+    font-family:'JetBrains Mono', monospace; font-size:13px; padding:16px;
+    resize:vertical; line-height:1.6;
+  }
+  textarea:focus, input:focus, select:focus{ outline:2px solid var(--gold); outline-offset:1px; }
+
+  .row{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-top:14px;}
+  .format-toggle{ display:flex; gap:8px; margin-bottom:16px; }
+  .format-toggle button{
+    flex:1; padding:10px 14px; border-radius:10px; border:1px solid var(--line);
+    background:var(--bg-soft); color:var(--text-dim); cursor:pointer; font-size:13px;
+    font-family:'Inter'; transition:.2s;
+  }
+  .format-toggle button.active{ border-color:var(--gold); color:var(--gold); background:rgba(255,200,87,.08); }
+
+  .example{
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim);
+    background:var(--bg); border:1px dashed var(--line); border-radius:10px;
+    padding:12px 14px; margin-top:12px; white-space:pre-line;
+  }
+
+  button.primary{
+    background:var(--coral); color:#1a1025; border:none; border-radius:12px;
+    padding:14px 26px; font-family:'Unbounded'; font-weight:600; font-size:15px;
+    cursor:pointer; transition:.2s;
+  }
+  button.primary:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  button.primary:disabled{ background:#584a68; color:#8a7fa0; cursor:not-allowed; transform:none; }
+  button.ghost{
+    background:transparent; border:1px solid var(--line); color:var(--text-dim);
+    border-radius:12px; padding:14px 22px; font-family:'Inter'; font-size:14px; cursor:pointer;
+  }
+  button.ghost:hover{ border-color:var(--gold); color:var(--gold); }
+
+  .count-line{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text-dim); margin-top:14px; }
+  .count-line b{ color:var(--gold); }
+
+  table.preview{ width:100%; border-collapse:collapse; margin-top:18px; font-size:13px; }
+  table.preview th{ text-align:left; color:var(--text-dim); font-weight:500; padding:8px 10px; border-bottom:1px solid var(--line); font-family:'JetBrains Mono'; font-size:11px; text-transform:uppercase; letter-spacing:.06em;}
+  table.preview td{ padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  table.preview tr.excluded td{ opacity:.35; text-decoration:line-through; }
+  table.preview td.user{ font-family:'JetBrains Mono', monospace; color:var(--mono); white-space:nowrap; }
+  .preview-scroll{ max-height:260px; overflow-y:auto; border-radius:10px; }
+  .toggle-row{ cursor:pointer; }
+
+  .filters-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+  @media (max-width:640px){ .filters-grid{ grid-template-columns:1fr; } }
+  .filter-item{ background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:16px; }
+  .filter-item label.main{ display:flex; align-items:center; gap:10px; font-weight:600; font-size:14px; cursor:pointer; }
+  .filter-item input[type=checkbox]{ width:17px; height:17px; accent-color:var(--coral); }
+  .filter-item .sub-input{ margin-top:10px; display:none; }
+  .filter-item.on .sub-input{ display:block; }
+  .filter-item input[type=text], .filter-item input[type=number]{
+    width:100%; background:var(--bg-soft); border:1px solid var(--line); border-radius:8px;
+    padding:9px 12px; color:var(--text); font-family:'JetBrains Mono'; font-size:13px; margin-top:4px;
+  }
+
+  .winners-config{ display:flex; gap:20px; align-items:flex-end; flex-wrap:wrap; margin-top:20px; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-size:12px; color:var(--text-dim); font-family:'JetBrains Mono'; }
+  .field input{ width:110px; background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:10px 12px; color:var(--text); font-size:15px; }
+
+  /* Drum */
+  .drum-stage{ display:flex; flex-direction:column; align-items:center; padding:20px 0 10px; }
+  .drum{
+    width:220px; height:220px; border-radius:50%;
+    border:4px solid var(--gold);
+    background: repeating-conic-gradient(from 0deg, #2b2140 0deg 18deg, #24192f 18deg 36deg);
+    position:relative; overflow:hidden;
+    box-shadow: 0 0 0 10px rgba(255,200,87,.06), inset 0 0 40px rgba(0,0,0,.5);
+  }
+  .drum.spinning{ animation: spin 0.9s linear infinite; }
+  @keyframes spin{ from{ transform:rotate(0);} to{ transform:rotate(360deg);} }
+  .drum-name{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--gold);
+    background:var(--bg); padding:6px 12px; border-radius:999px; border:1px solid var(--gold);
+    white-space:nowrap; max-width:190px; overflow:hidden; text-overflow:ellipsis;
+  }
+  .drum-caption{ margin-top:18px; font-family:'JetBrains Mono'; font-size:13px; color:var(--text-dim); min-height:20px; }
+
+  .tickets{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-top:26px; }
+  .ticket{
+    position:relative; background:var(--bg); border:1px dashed var(--gold); border-radius:14px;
+    padding:20px 18px; text-align:center;
+  }
+  .ticket::before, .ticket::after{
+    content:''; position:absolute; width:16px; height:16px; background:var(--panel);
+    border-radius:50%; top:50%; transform:translateY(-50%);
+  }
+  .ticket::before{ left:-9px; } .ticket::after{ right:-9px; }
+  .ticket .rank{ font-family:'JetBrains Mono'; font-size:11px; color:var(--text-dim); letter-spacing:.1em; text-transform:uppercase; }
+  .ticket .name{ font-family:'Unbounded'; font-size:19px; margin-top:8px; color:var(--gold); word-break:break-word; }
+  .ticket.reserve .name{ color:var(--mono); font-size:16px; }
+  .ticket.reserve{ border-style:dotted; border-color:var(--line); }
+
+  .export-row{ display:flex; gap:12px; justify-content:center; margin-top:28px; flex-wrap:wrap; }
+
+  footer.note{ text-align:center; color:var(--text-dim); font-size:12.5px; margin-top:36px; line-height:1.7; }
+  footer.note b{ color:var(--text); }
+
+  #ticketCapture{ background:var(--bg-soft); border-radius:16px; padding:24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Розыгрыш за 3 минуты</div>
+    <h1>Vy<span>bor</span></h1>
+    <p class="sub">Вставь комментарии, задай условия, получи победителя с доказательством честности. Без подписки, без переплаты за один розыгрыш.</p>
+  </header>
+
+  <div class="steps">
+    <div class="step-chip active" id="chip-1">1 · Комментарии</div>
+    <div class="step-chip" id="chip-2">2 · Условия</div>
+    <div class="step-chip" id="chip-3">3 · Розыгрыш</div>
+  </div>
+
+  <!-- STEP 1 -->
+  <section class="panel" id="panel-1">
+    <h2>Вставь комментарии из поста</h2>
+    <p class="hint">Открой пост в Instagram → выдели все комментарии → скопируй → вставь ниже. Сервис сам попробует распознать имена и текст. Если распознает криво — поправишь в таблице ниже, прежде чем запускать розыгрыш.</p>
+
+    <div class="format-toggle">
+      <button id="fmt-smart" class="active" onclick="setFormat('smart')">Вставка из Instagram (авто)</button>
+      <button id="fmt-simple" onclick="setFormat('simple')">Простой формат: юзернейм: текст</button>
+    </div>
+
+    <textarea id="rawInput" placeholder="Вставь сюда скопированные комментарии..."></textarea>
+    <div class="example" id="exampleBox"></div>
+
+    <div class="row">
+      <button class="primary" onclick="parseComments()">Распознать комментарии</button>
+      <span class="count-line" id="parseCount"></span>
+    </div>
+
+    <div class="preview-scroll" id="previewWrap" style="display:none;">
+      <table class="preview" id="previewTable">
+        <thead><tr><th>Учитывать</th><th>Юзернейм</th><th>Комментарий</th></tr></thead>
+        <tbody id="previewBody"></tbody>
+      </table>
+    </div>
+
+    <div class="row" style="justify-content:flex-end;" id="toStep2Row" style="display:none;">
+      <button class="primary" id="toStep2" style="display:none;" onclick="goToStep(2)">Дальше → условия розыгрыша</button>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="panel" id="panel-2" style="display:none;">
+    <h2>Условия участия</h2>
+    <p class="hint">Отметь, какие условия обязательны. Все, кто им не соответствует, автоматически не попадут в розыгрыш — это видно будет сразу в списке выше.</p>
+
+    <div class="filters-grid">
+      <div class="filter-item" id="f-mentions">
+        <label class="main"><input type="checkbox" onchange="toggleFilter('f-mentions')"> Обязательные отметки друзей (@)</label>
+        <div class="sub-input">
+          <label style="font-size:12px;color:var(--text-dim);">Минимум отметок в комментарии</label>
+          <input type="number" id="minMentions" min="1" value="2">
+        </div>
+      </div>
+      <div class="filter-item" id="f-hashtag">
+        <label class="main"><input type="checkbox" onchange="toggleFilter('f-hashtag')"> Обязательный хэштег или слово</label>
+        <div class="sub-input">
+          <input type="text" id="requiredWord" placeholder="#мойхэштег">
+        </div>
+      </div>
+      <div class="filter-item" id="f-unique">
+        <label class="main"><input type="checkbox" onchange="toggleFilter('f-unique')" checked> Один голос от одного человека</label>
+        <div class="sub-input"><p style="font-size:12px;color:var(--text-dim);margin:4px 0 0;">Если человек написал несколько комментариев — учитывается последний.</p></div>
+      </div>
+      <div class="filter-item" id="f-stop">
+        <label class="main"><input type="checkbox" onchange="toggleFilter('f-stop')"> Стоп-лист аккаунтов</label>
+        <div class="sub-input">
+          <input type="text" id="stopList" placeholder="юзернейм1, юзернейм2">
+        </div>
+      </div>
+    </div>
+
+    <div class="winners-config">
+      <div class="field"><label>Победителей</label><input type="number" id="winnersCount" min="1" value="1"></div>
+      <div class="field"><label>Запасных</label><input type="number" id="reserveCount" min="0" value="2"></div>
+      <div class="field" style="width:220px;"><label>Email для чека</label><input type="email" id="userEmail" placeholder="you@mail.ru" style="width:100%;"></div>
+      <button class="primary" onclick="applyFiltersAndGo()">Применить и перейти к розыгрышу →</button>
+    </div>
+
+    <div class="filter-item" id="backend-toggle" style="margin-top:18px;">
+      <label class="main"><input type="checkbox" id="useBackend" onchange="toggleFilter('backend-toggle')" checked> Провести через сервер (бесплатно, с сертификатом честности)</label>
+      <div class="sub-input">
+        <label style="font-size:12px;color:var(--text-dim);">Адрес API</label>
+        <input type="text" id="apiBase" value="https://tanyatats-vybor-backend-e396.twc1.net">
+        <p style="font-size:12px;color:var(--text-dim);margin:8px 0 0;">Пока сервис бесплатный — розыгрыш проводится на сервере (криптографическая случайность + сертификат), без оплаты. Без галочки — розыгрыш пройдёт прямо в браузере, без сервера.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="panel" id="panel-3" style="display:none;">
+    <h2>Розыгрыш</h2>
+    <p class="hint" id="eligibleHint"></p>
+
+    <div class="row" id="payRow" style="display:none;">
+      <button class="primary" id="payBtn" onclick="startPayment()">🎁 Провести розыгрыш через сервер (бесплатно)</button>
+      <button class="ghost" onclick="goToStep(2)">← изменить условия</button>
+    </div>
+    <p class="drum-caption" id="payStatus"></p>
+
+    <div class="drum-stage" id="drumStage" style="display:none;">
+      <div class="drum" id="drum"><div class="drum-name" id="drumName">?</div></div>
+      <div class="drum-caption" id="drumCaption">Нажми «Крутить барабан», когда будешь готова</div>
+      <div class="row" style="margin-top:18px;">
+        <button class="primary" id="spinBtn" onclick="runDraw()">🎲 Крутить барабан</button>
+        <button class="ghost" onclick="goToStep(2)">← изменить условия</button>
+      </div>
+    </div>
+
+    <div id="ticketCapture" style="display:none;">
+      <div class="tickets" id="ticketsWrap"></div>
+      <div class="example" id="certBox" style="display:none;"></div>
+    </div>
+
+    <div class="export-row" id="exportRow" style="display:none;">
+      <button class="primary" onclick="exportImage()">📸 Сохранить как картинку</button>
+      <button class="ghost" onclick="downloadCertificate()" id="certBtn" style="display:none;">📄 Скачать сертификат честности</button>
+      <button class="ghost" onclick="location.reload()">Начать новый розыгрыш</button>
+    </div>
+  </section>
+
+  <footer class="note">
+    <b>Как это работает без API Instagram:</b> сервис не подключается к Instagram напрямую — комментарии переносятся вручную, а вся обработка и выбор победителя происходят локально, в браузере. Это делает розыгрыш прозрачным и воспроизводимым: любой участник может попросить показать список и повторить процесс.
+  </footer>
+</div>
+
+<script>
+let entries = []; // {user, text, include, reasonExcluded}
+let format = 'smart';
+
+const examples = {
+  smart: `Пример того, что можно вставить как есть:
+
+anna_travel
+Классный розыгрыш! @friend_one @friend_two 🔥
+12 нед · Ответить
+
+dmitry.codes
+хочу победить!! #giveaway
+9 нед · Ответить`,
+  simple: `Пример простого формата (по одному участнику на строку):
+
+anna_travel: Классный розыгрыш! @friend_one @friend_two 🔥
+dmitry.codes: хочу победить!! #giveaway
+maria_k: участвую @friend_three`
+};
+
+function setFormat(f){
+  format = f;
+  document.getElementById('fmt-smart').classList.toggle('active', f==='smart');
+  document.getElementById('fmt-simple').classList.toggle('active', f==='simple');
+  document.getElementById('exampleBox').textContent = examples[f];
+}
+setFormat('smart');
+
+function isLikelyUsername(line){
+  const t = line.trim();
+  if(!t || t.includes(' ')) return false;
+  if(t.length > 30 || t.length < 1) return false;
+  return /^[a-zA-Z0-9._]+$/.test(t);
+}
+
+function parseSmart(raw){
+  const lines = raw.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+  const result = [];
+  let i=0;
+  while(i < lines.length){
+    if(isLikelyUsername(lines[i])){
+      const user = lines[i];
+      let j = i+1;
+      let textParts = [];
+      while(j < lines.length && !isLikelyUsername(lines[j])){
+        // skip metadata lines like "12 нед · Ответить" or standalone "Ответить"/likes count
+        if(/^(ответить|нравится|нед\.?|\d+\s*(нед|дн|ч|мин|д)\b.*)$/i.test(lines[j]) || /^\d+$/.test(lines[j])){
+          j++; continue;
+        }
+        textParts.push(lines[j]);
+        j++;
+      }
+      if(textParts.length){
+        result.push({user, text: textParts.join(' ')});
+      }
+      i = j;
+    } else {
+      i++;
+    }
+  }
+  return result;
+}
+
+function parseSimple(raw){
+  const lines = raw.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+  const result = [];
+  lines.forEach(line=>{
+    const idx = line.indexOf(':');
+    if(idx > -1){
+      const user = line.slice(0, idx).trim().replace(/^@/,'');
+      const text = line.slice(idx+1).trim();
+      if(user) result.push({user, text});
+    }
+  });
+  return result;
+}
+
+function parseComments(){
+  const raw = document.getElementById('rawInput').value;
+  let parsed = format === 'smart' ? parseSmart(raw) : parseSimple(raw);
+  if(parsed.length === 0){
+    document.getElementById('parseCount').textContent = 'Не удалось распознать ни одного комментария — проверь формат или попробуй другой режим вставки.';
+    return;
+  }
+  entries = parsed.map(p => ({user:p.user, text:p.text, include:true, reason:''}));
+  renderPreview();
+}
+
+function renderPreview(){
+  const body = document.getElementById('previewBody');
+  body.innerHTML = '';
+  entries.forEach((e, idx)=>{
+    const tr = document.createElement('tr');
+    tr.className = e.include ? '' : 'excluded';
+    tr.innerHTML = `<td><input type="checkbox" ${e.include?'checked':''} onchange="toggleEntry(${idx})"></td>
+      <td class="user">@${escapeHtml(e.user)}</td>
+      <td>${escapeHtml(e.text)}</td>`;
+    body.appendChild(tr);
+  });
+  document.getElementById('previewWrap').style.display = 'block';
+  document.getElementById('parseCount').innerHTML = `Распознано комментариев: <b>${entries.length}</b> · уникальных участников: <b>${new Set(entries.map(e=>e.user.toLowerCase())).size}</b>`;
+  document.getElementById('toStep2').style.display = 'inline-block';
+}
+
+function toggleEntry(idx){
+  entries[idx].include = !entries[idx].include;
+  renderPreview();
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function toggleFilter(id){
+  document.getElementById(id).classList.toggle('on', document.getElementById(id).querySelector('input[type=checkbox]').checked);
+}
+
+let eligiblePool = [];
+
+function applyFiltersAndGo(){
+  const useMentions = document.querySelector('#f-mentions input[type=checkbox]').checked;
+  const minMentions = parseInt(document.getElementById('minMentions').value || '1', 10);
+  const useHashtag = document.querySelector('#f-hashtag input[type=checkbox]').checked;
+  const requiredWord = document.getElementById('requiredWord').value.trim().toLowerCase();
+  const useUnique = document.querySelector('#f-unique input[type=checkbox]').checked;
+  const useStop = document.querySelector('#f-stop input[type=checkbox]').checked;
+  const stopList = document.getElementById('stopList').value.toLowerCase().split(',').map(s=>s.trim()).filter(Boolean);
+
+  let pool = entries.filter(e=>e.include);
+
+  pool = pool.map(e=>{
+    let ok = true, reason = '';
+    const mentionCount = (e.text.match(/@[a-zA-Z0-9._]+/g) || []).length;
+    if(useMentions && mentionCount < minMentions){ ok=false; reason='мало отметок'; }
+    if(ok && useHashtag && requiredWord && !e.text.toLowerCase().includes(requiredWord)){ ok=false; reason='нет обязательного слова'; }
+    if(ok && useStop && stopList.includes(e.user.toLowerCase())){ ok=false; reason='в стоп-листе'; }
+    return {...e, eligible: ok, reason};
+  });
+
+  if(useUnique){
+    const seen = new Map();
+    pool.forEach(e=>{ if(e.eligible) seen.set(e.user.toLowerCase(), e); });
+    pool = pool.map(e => (e.eligible && seen.get(e.user.toLowerCase()) !== e) ? {...e, eligible:false, reason:'дубликат, учтён последний комментарий'} : e);
+  }
+
+  eligiblePool = pool.filter(e=>e.eligible);
+  document.getElementById('eligibleHint').innerHTML = `Участников, прошедших условия: <b>${eligiblePool.length}</b> из ${entries.filter(e=>e.include).length} отмеченных.`;
+
+  usingBackend = document.getElementById('useBackend').checked;
+  goToStep(3);
+
+  if(usingBackend){
+    document.getElementById('payRow').style.display = 'flex';
+    document.getElementById('drumStage').style.display = 'none';
+  } else {
+    document.getElementById('payRow').style.display = 'none';
+    document.getElementById('drumStage').style.display = 'flex';
+  }
+}
+
+function goToStep(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('panel-'+i).style.display = i===n ? 'block' : 'none';
+    const chip = document.getElementById('chip-'+i);
+    chip.classList.toggle('active', i===n);
+    chip.classList.toggle('done', i<n);
+  });
+}
+
+let spinning = false;
+function runDraw(){
+  if(spinning) return;
+  if(eligiblePool.length === 0){
+    document.getElementById('drumCaption').textContent = 'Нет участников, соответствующих условиям.';
+    return;
+  }
+  spinning = true;
+  document.getElementById('spinBtn').disabled = true;
+  const drum = document.getElementById('drum');
+  const drumName = document.getElementById('drumName');
+  drum.classList.add('spinning');
+  let ticks = 0;
+  const maxTicks = 28;
+  const interval = setInterval(()=>{
+    const rnd = eligiblePool[Math.floor(Math.random()*eligiblePool.length)];
+    drumName.textContent = '@'+rnd.user;
+    ticks++;
+    if(ticks >= maxTicks){
+      clearInterval(interval);
+      drum.classList.remove('spinning');
+      finishDraw();
+    }
+  }, 90);
+}
+
+function finishDraw(){
+  const winnersCount = Math.min(parseInt(document.getElementById('winnersCount').value||'1',10), eligiblePool.length);
+  const reserveCount = Math.min(parseInt(document.getElementById('reserveCount').value||'0',10), eligiblePool.length - winnersCount);
+
+  const shuffled = [...eligiblePool];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const winners = shuffled.slice(0, winnersCount);
+  const reserves = shuffled.slice(winnersCount, winnersCount+reserveCount);
+
+  document.getElementById('drumName').textContent = '@'+winners[0].user;
+  document.getElementById('drumCaption').textContent = 'Готово! Результат ниже.';
+  document.getElementById('spinBtn').disabled = false;
+
+  const wrap = document.getElementById('ticketsWrap');
+  wrap.innerHTML = '';
+  winners.forEach((w, idx)=>{
+    const t = document.createElement('div');
+    t.className = 'ticket';
+    t.innerHTML = `<div class="rank">Победитель ${idx+1}</div><div class="name">@${escapeHtml(w.user)}</div>`;
+    wrap.appendChild(t);
+  });
+  reserves.forEach((r, idx)=>{
+    const t = document.createElement('div');
+    t.className = 'ticket reserve';
+    t.innerHTML = `<div class="rank">Запасной ${idx+1}</div><div class="name">@${escapeHtml(r.user)}</div>`;
+    wrap.appendChild(t);
+  });
+
+  document.getElementById('ticketCapture').style.display = 'block';
+  document.getElementById('exportRow').style.display = 'flex';
+  spinning = false;
+
+  // Демо-сертификат — считается локально в браузере через SubtleCrypto,
+  // тем же алгоритмом хэширования, что использует бэкенд.
+  // В демо-режиме это просто иллюстрация принципа, не юридическое доказательство:
+  // настоящий сертификат выдаёт только оплаченный розыгрыш через сервер.
+  const normalized = JSON.stringify(eligiblePool.map(e=>e.user.toLowerCase()).sort());
+  sha256Hex(normalized).then(hash=>{
+    lastCertificate = {
+      draw_id: 'demo',
+      participants_hash: hash,
+      result: {winners: winners.map(w=>w.user), reserves: reserves.map(r=>r.user)},
+      timestamp_utc: new Date().toISOString(),
+      note: 'ДЕМО-режим: розыгрыш проведён локально в браузере, не через оплаченный сервер.'
+    };
+    document.getElementById('certBox').style.display = 'block';
+    document.getElementById('certBox').textContent = 'Демо-сертификат (не для реальных призов): ' + hash;
+    document.getElementById('certBtn').style.display = 'inline-block';
+  });
+}
+
+function exportImage(){
+  const node = document.getElementById('ticketCapture');
+  html2canvas(node, {backgroundColor: null, scale:2}).then(canvas=>{
+    const link = document.createElement('a');
+    link.download = 'rozygrysh-rezultat.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+}
+
+/* ===== Интеграция с бэкендом (реальная оплата через ЮKassa) ===== */
+
+let usingBackend = false;
+let lastCertificate = null;
+let currentDrawId = null;
+
+async function sha256Hex(str){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function apiBase(){
+  return document.getElementById('apiBase').value.replace(/\/$/, '');
+}
+
+async function startPayment(){
+  const email = document.getElementById('userEmail').value.trim();
+  const payload = {
+    email: email || null,
+    config: {
+      winners_count: parseInt(document.getElementById('winnersCount').value||'1',10),
+      reserve_count: parseInt(document.getElementById('reserveCount').value||'0',10),
+      unique_per_user: document.querySelector('#f-unique input[type=checkbox]').checked
+    },
+    participants: eligiblePool.map(e => ({user: e.user}))
+  };
+
+  document.getElementById('payStatus').textContent = 'Создаю розыгрыш на сервере...';
+  document.getElementById('payBtn').disabled = true;
+
+  try{
+    const drawRes = await fetch(`${apiBase()}/api/draws`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    });
+    if(!drawRes.ok) throw new Error('draw create failed');
+    const draw = await drawRes.json();
+    currentDrawId = draw.id;
+
+    // Бесплатный режим: сразу запускаем розыгрыш без оплаты.
+    // Когда включишь платный режим (FREE_MODE=false на сервере) —
+    // здесь снова понадобится шаг с редиректом на ЮKassa
+    // (в git-истории проекта есть готовый вариант с оплатой).
+    document.getElementById('payRow').style.display = 'none';
+    document.getElementById('drumStage').style.display = 'flex';
+    document.getElementById('drum').classList.add('spinning');
+    document.getElementById('drumCaption').textContent = 'Провожу розыгрыш на сервере...';
+    document.getElementById('spinBtn').style.display = 'none';
+
+    const runRes = await fetch(`${apiBase()}/api/draws/${draw.id}/run`, {method:'POST'});
+    if(!runRes.ok) throw new Error('run failed: ' + (await runRes.text()));
+    const runData = await runRes.json();
+    document.getElementById('drum').classList.remove('spinning');
+    showServerResult(runData.result, runData.certificate);
+  }catch(err){
+    document.getElementById('payStatus').textContent = 'Не удалось связаться с сервером: ' + err.message + '. Проверь, что бэкенд запущен и адрес API указан верно.';
+    document.getElementById('payBtn').disabled = false;
+    document.getElementById('drum').classList.remove('spinning');
+  }
+}
+
+async function checkReturnFromPayment(){
+  const params = new URLSearchParams(window.location.search);
+  const drawId = params.get('draw_id');
+  if(!drawId) return;
+
+  usingBackend = true;
+  goToStep(3);
+  document.getElementById('payRow').style.display = 'none';
+  document.getElementById('drumStage').style.display = 'flex';
+  document.getElementById('drum').classList.add('spinning');
+  document.getElementById('drumCaption').textContent = 'Проверяю оплату...';
+  document.getElementById('spinBtn').style.display = 'none';
+
+  const base = apiBase();
+  let attempts = 0;
+  const poll = setInterval(async ()=>{
+    attempts++;
+    try{
+      const r = await fetch(`${base}/api/draws/${drawId}`);
+      const data = await r.json();
+      if(data.status === 'paid'){
+        clearInterval(poll);
+        document.getElementById('drumCaption').textContent = 'Оплата подтверждена, провожу розыгрыш...';
+        const runRes = await fetch(`${base}/api/draws/${drawId}/run`, {method:'POST'});
+        const runData = await runRes.json();
+        document.getElementById('drum').classList.remove('spinning');
+        showServerResult(runData.result, runData.certificate);
+      } else if(data.status === 'completed'){
+        clearInterval(poll);
+        document.getElementById('drum').classList.remove('spinning');
+        showServerResult(data.result, {certificate_hash: data.certificate_hash});
+      }
+    }catch(e){ /* сервер ещё не ответил — пробуем ещё раз */ }
+    if(attempts > 40){
+      clearInterval(poll);
+      document.getElementById('drumCaption').textContent = 'Оплата пока не подтвердилась. Обнови страницу через минуту.';
+    }
+  }, 3000);
+}
+
+function showServerResult(result, certificate){
+  document.getElementById('drumName').textContent = '@'+result.winners[0];
+  const wrap = document.getElementById('ticketsWrap');
+  wrap.innerHTML = '';
+  result.winners.forEach((user, idx)=>{
+    const t = document.createElement('div');
+    t.className = 'ticket';
+    t.innerHTML = `<div class="rank">Победитель ${idx+1}</div><div class="name">@${escapeHtml(user)}</div>`;
+    wrap.appendChild(t);
+  });
+  (result.reserves||[]).forEach((user, idx)=>{
+    const t = document.createElement('div');
+    t.className = 'ticket reserve';
+    t.innerHTML = `<div class="rank">Запасной ${idx+1}</div><div class="name">@${escapeHtml(user)}</div>`;
+    wrap.appendChild(t);
+  });
+  lastCertificate = certificate;
+  document.getElementById('certBox').style.display = 'block';
+  document.getElementById('certBox').textContent = 'Сертификат честности: ' + (certificate.certificate_hash || '(будет доступен по /certificate)');
+  document.getElementById('certBtn').style.display = 'inline-block';
+  document.getElementById('ticketCapture').style.display = 'block';
+  document.getElementById('exportRow').style.display = 'flex';
+}
+
+function downloadCertificate(){
+  if(!lastCertificate) return;
+  const blob = new Blob([JSON.stringify(lastCertificate, null, 2)], {type:'application/json'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'vybor-sertifikat.json';
+  link.click();
+}
+
+// Проверяем при загрузке страницы: не вернулись ли мы сюда после оплаты
+checkReturnFromPayment();
+
+// Галочка "через сервер" включена по умолчанию — раскроем её блок с адресом
+if(document.getElementById('useBackend').checked){
+  document.getElementById('backend-toggle').classList.add('on');
+}
+</script>
+</body>
+</html>
