@@ -98,6 +98,9 @@
   .state.active{ display:block; }
 
   #emailBlock{ margin-top:16px; }
+  .foot{ margin-top:26px; font-size:11.5px; color:var(--dim); text-align:center; }
+  .foot a{ color:var(--pink); text-decoration:none; }
+  .foot a:hover{ text-decoration:underline; }
 </style>
 </head>
 <body>
@@ -153,10 +156,8 @@
         <div class="live">обновляется автоматически</div>
       </div>
 
-      <!-- Кнопка "Провести розыгрыш" (становится неактивна при показе email) -->
       <button class="primary" id="drawBtn">🎲 Провести розыгрыш</button>
 
-      <!-- Блок с email и оплатой (скрыт изначально) -->
       <div id="emailBlock" style="display:none;">
         <label class="fld">Email для чека</label>
         <input type="email" id="emailInput" placeholder="you@example.com">
@@ -181,6 +182,13 @@
       <p class="hint">Ссылка на розыгрыш теперь показывает победителей всем, кто по ней перейдёт.</p>
     </div>
   </div>
+
+  <div class="foot">
+    <a href="privacy.html">Политика конфиденциальности</a> |
+    <a href="terms.html">Условия использования</a> |
+    <a href="contacts.html">Контакты</a> |
+    <a href="requisites.html">Реквизиты</a>
+  </div>
 </div>
 
 <script>
@@ -196,7 +204,6 @@ function show(s){
   document.getElementById('state-'+s).classList.add('active');
 }
 
-// --- создание ---
 document.getElementById('createBtn').addEventListener('click', async ()=>{
   const title = document.getElementById('title').value.trim();
   const winners = parseInt(document.getElementById('winners').value||'1',10);
@@ -228,20 +235,18 @@ function openManage(title){
   const link = participantLink(currentCode);
   document.getElementById('shareLink').value = link;
 
-  // QR
   const box = document.getElementById('qrcode');
   box.innerHTML = '';
   try{
     if(window.QRCode){
       new QRCode(box, { text: link, width: 160, height: 160, colorDark:'#2b1a3d', colorLight:'#ffffff' });
     }
-  }catch(e){ /* без QR не страшно */ }
+  }catch(e){}
 
   show('manage');
   startPolling();
 }
 
-// --- живой счётчик ---
 async function refreshCount(){
   if(!currentCode) return;
   try{
@@ -263,9 +268,7 @@ document.getElementById('copyLink').addEventListener('click', async ()=>{
   }catch(e){ document.getElementById('shareLink').select(); document.execCommand('copy'); }
 });
 
-// --- оплата и розыгрыш ---
 document.getElementById('drawBtn').addEventListener('click', ()=>{
-  // Показываем блок email, скрываем эту кнопку
   document.getElementById('drawBtn').style.display = 'none';
   document.getElementById('emailBlock').style.display = 'block';
 });
@@ -282,7 +285,6 @@ document.getElementById('payBtn').addEventListener('click', async ()=>{
   btn.textContent = 'Создаю платёж…';
   stopPolling();
   try{
-    // Создаём платёж через бэкенд
     const res = await fetch(`${API}/api/reg-draws/${currentCode}/pay`, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ email, return_url: SITE + 'create.html?draw=' + currentCode })
@@ -303,26 +305,22 @@ document.getElementById('payBtn').addEventListener('click', async ()=>{
   }
 });
 
-// --- возврат после оплаты ---
 async function handlePaidDraw(code){
   currentCode = code;
   try{
     const res = await fetch(`${API}/api/reg-draws/${code}`);
     const d = await res.json();
     if(d.payment_status === 'paid' || d.status === 'completed'){
-      // если розыгрыш уже проведён — покажем результат
       if(d.result && d.result.winners){
         currentCert = d.result;
         showResult(d.result, d.participants_count);
         return;
       }
-      // иначе проводим розыгрыш (запускаем)
       const runRes = await fetch(`${API}/api/reg-draws/${code}/run`, { method:'POST' });
       const runData = await runRes.json();
       currentCert = runData.certificate;
       showResult(runData.result, runData.participants_count);
     } else if(d.payment_status === 'pending'){
-      // платёж ещё обрабатывается — покажем сообщение и polling
       document.getElementById('mgTitle').textContent = 'Оплата обрабатывается';
       document.getElementById('liveCount').textContent = d.participants_count;
       show('manage');
@@ -330,7 +328,6 @@ async function handlePaidDraw(code){
       document.getElementById('emailBlock').style.display = 'none';
       document.getElementById('mgMsg').className = 'msg';
       document.getElementById('mgMsg').textContent = 'Ожидайте подтверждения оплаты (обычно несколько секунд).';
-      // опрашиваем статус
       const pollPaid = setInterval(async ()=>{
         const sRes = await fetch(`${API}/api/reg-draws/${code}`);
         const sData = await sRes.json();
@@ -339,7 +336,7 @@ async function handlePaidDraw(code){
           handlePaidDraw(code);
         }
       }, 3000);
-      setTimeout(()=>clearInterval(pollPaid), 60000); // таймаут 1 мин
+      setTimeout(()=>clearInterval(pollPaid), 60000);
     }
   } catch(e) {
     document.getElementById('mgMsg').className = 'msg err';
@@ -347,7 +344,6 @@ async function handlePaidDraw(code){
   }
 }
 
-// при загрузке проверяем draw=
 (()=>{
   const params = new URLSearchParams(location.search);
   const drawCode = params.get('draw');
@@ -390,5 +386,19 @@ document.getElementById('certBtn').addEventListener('click', ()=>{
 
 document.getElementById('newBtn').addEventListener('click', ()=>location.reload());
 </script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111067223', 'ym');
+
+    ym(111067223, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/111067223" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </body>
 </html>
