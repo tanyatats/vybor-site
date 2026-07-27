@@ -2,9 +2,16 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Создать розыгрыш — Vybor</title>
+<title>Создать розыгрыш — Vybor | Честный сервис розыгрышей Instagram</title>
+<meta name="description" content="Создайте розыгрыш с автоматической регистрацией участников и криптографически честным выбором победителя. Оплата 149 ₽ за розыгрыш.">
+<meta name="keywords" content="создать розыгрыш, розыгрыш инстаграм, генератор победителей, vybor">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ff4d8f%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c159f5%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2226%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M26%2030%20L50%2072%20L74%2030%22%20stroke%3D%22white%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22/%3E%3C/svg%3E">
+<link rel="canonical" href="https://tanyatats.github.io/vybor-site/create.html">
+<meta property="og:title" content="Создать розыгрыш — Vybor">
+<meta property="og:description" content="Прозрачный розыгрыш с автоматической регистрацией и честным выбором.">
+<meta property="og:url" content="https://tanyatats.github.io/vybor-site/create.html">
+<meta property="og:image" content="https://tanyatats.github.io/vybor-site/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -89,6 +96,8 @@
 
   .state{ display:none; }
   .state.active{ display:block; }
+
+  #emailBlock{ margin-top:16px; }
 </style>
 </head>
 <body>
@@ -102,7 +111,7 @@
   <div class="state active" id="state-create">
     <div class="card">
       <h1>Новый розыгрыш</h1>
-      <p class="lead">Создай розыгрыш, поделись ссылкой — участники зарегистрируются сами. Никакого сбора комментариев.</p>
+      <p class="lead">Создай розыгрыш, поделись ссылкой — участники зарегистрируются сами.</p>
 
       <label class="fld">Название розыгрыша</label>
       <input type="text" id="title" placeholder="Например: Розыгрыш от @моя_страница">
@@ -144,7 +153,17 @@
         <div class="live">обновляется автоматически</div>
       </div>
 
+      <!-- Кнопка "Провести розыгрыш" (становится неактивна при показе email) -->
       <button class="primary" id="drawBtn">🎲 Провести розыгрыш</button>
+
+      <!-- Блок с email и оплатой (скрыт изначально) -->
+      <div id="emailBlock" style="display:none;">
+        <label class="fld">Email для чека</label>
+        <input type="email" id="emailInput" placeholder="you@example.com">
+        <button class="primary" id="payBtn">Оплатить 149 ₽ и провести розыгрыш</button>
+        <p class="hint">Электронный чек обязателен по закону. После оплаты вы сразу получите победителей.</p>
+      </div>
+
       <button class="ghost" id="refreshBtn">Обновить счётчик вручную</button>
       <div class="msg" id="mgMsg"></div>
     </div>
@@ -166,7 +185,7 @@
 
 <script>
 const API = "https://tanyatats-vybor-backend-e396.twc1.net";
-const SITE = location.origin + location.pathname.replace(/create\.html$/,'') ;
+const SITE = location.origin + location.pathname.replace(/create\.html$/,'');
 
 let currentCode = null;
 let currentCert = null;
@@ -216,7 +235,7 @@ function openManage(title){
     if(window.QRCode){
       new QRCode(box, { text: link, width: 160, height: 160, colorDark:'#2b1a3d', colorLight:'#ffffff' });
     }
-  }catch(e){ /* если QR не сгенерился — не критично, ссылка всё равно есть */ }
+  }catch(e){ /* без QR не страшно */ }
 
   show('manage');
   startPolling();
@@ -244,26 +263,98 @@ document.getElementById('copyLink').addEventListener('click', async ()=>{
   }catch(e){ document.getElementById('shareLink').select(); document.execCommand('copy'); }
 });
 
-// --- розыгрыш ---
-document.getElementById('drawBtn').addEventListener('click', async ()=>{
-  const msg = document.getElementById('mgMsg'); msg.className='msg';
-  if(!confirm('Провести розыгрыш? После этого регистрация закроется и результат зафиксируется.')) return;
-  const btn = document.getElementById('drawBtn');
-  btn.disabled=true; btn.textContent='Провожу…';
+// --- оплата и розыгрыш ---
+document.getElementById('drawBtn').addEventListener('click', ()=>{
+  // Показываем блок email, скрываем эту кнопку
+  document.getElementById('drawBtn').style.display = 'none';
+  document.getElementById('emailBlock').style.display = 'block';
+});
+
+document.getElementById('payBtn').addEventListener('click', async ()=>{
+  const email = document.getElementById('emailInput').value.trim();
+  if(!email || !email.includes('@')){
+    document.getElementById('mgMsg').className = 'msg err';
+    document.getElementById('mgMsg').textContent = 'Введите корректный email';
+    return;
+  }
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.textContent = 'Создаю платёж…';
   stopPolling();
   try{
-    const res = await fetch(`${API}/api/reg-draws/${currentCode}/run`, {method:'POST'});
-    if(res.status === 400){ msg.classList.add('err'); msg.textContent='Пока нет участников — некого разыгрывать.'; btn.disabled=false; btn.textContent='🎲 Провести розыгрыш'; startPolling(); return; }
-    if(!res.ok) throw new Error('fail');
-    const d = await res.json();
-    currentCert = d.certificate;
-    showResult(d.result, d.participants_count);
-  }catch(e){
-    btn.disabled=false; btn.textContent='🎲 Провести розыгрыш';
-    msg.classList.add('err'); msg.textContent='Не удалось провести розыгрыш. Попробуй ещё раз.';
+    // Создаём платёж через бэкенд
+    const res = await fetch(`${API}/api/reg-draws/${currentCode}/pay`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, return_url: SITE + 'create.html?draw=' + currentCode })
+    });
+    if(!res.ok) throw new Error('pay failed');
+    const payment = await res.json();
+    if(payment.confirmation && payment.confirmation.confirmation_url){
+      window.location.href = payment.confirmation.confirmation_url;
+    } else {
+      throw new Error('no url');
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Оплатить 149 ₽ и провести розыгрыш';
+    document.getElementById('mgMsg').className = 'msg err';
+    document.getElementById('mgMsg').textContent = 'Ошибка платежа. Попробуйте позже.';
     startPolling();
   }
 });
+
+// --- возврат после оплаты ---
+async function handlePaidDraw(code){
+  currentCode = code;
+  try{
+    const res = await fetch(`${API}/api/reg-draws/${code}`);
+    const d = await res.json();
+    if(d.payment_status === 'paid' || d.status === 'completed'){
+      // если розыгрыш уже проведён — покажем результат
+      if(d.result && d.result.winners){
+        currentCert = d.result;
+        showResult(d.result, d.participants_count);
+        return;
+      }
+      // иначе проводим розыгрыш (запускаем)
+      const runRes = await fetch(`${API}/api/reg-draws/${code}/run`, { method:'POST' });
+      const runData = await runRes.json();
+      currentCert = runData.certificate;
+      showResult(runData.result, runData.participants_count);
+    } else if(d.payment_status === 'pending'){
+      // платёж ещё обрабатывается — покажем сообщение и polling
+      document.getElementById('mgTitle').textContent = 'Оплата обрабатывается';
+      document.getElementById('liveCount').textContent = d.participants_count;
+      show('manage');
+      document.getElementById('drawBtn').style.display = 'none';
+      document.getElementById('emailBlock').style.display = 'none';
+      document.getElementById('mgMsg').className = 'msg';
+      document.getElementById('mgMsg').textContent = 'Ожидайте подтверждения оплаты (обычно несколько секунд).';
+      // опрашиваем статус
+      const pollPaid = setInterval(async ()=>{
+        const sRes = await fetch(`${API}/api/reg-draws/${code}`);
+        const sData = await sRes.json();
+        if(sData.payment_status === 'paid' || sData.status === 'completed'){
+          clearInterval(pollPaid);
+          handlePaidDraw(code);
+        }
+      }, 3000);
+      setTimeout(()=>clearInterval(pollPaid), 60000); // таймаут 1 мин
+    }
+  } catch(e) {
+    document.getElementById('mgMsg').className = 'msg err';
+    document.getElementById('mgMsg').textContent = 'Не удалось проверить оплату. Попробуйте обновить страницу.';
+  }
+}
+
+// при загрузке проверяем draw=
+(()=>{
+  const params = new URLSearchParams(location.search);
+  const drawCode = params.get('draw');
+  if(drawCode){
+    handlePaidDraw(drawCode);
+  }
+})();
 
 function showResult(result, count){
   document.getElementById('resultLead').textContent =
