@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Участвовать в розыгрыше — Vybor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ff4d8f%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c159f5%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2226%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M26%2030%20L50%2072%20L74%2030%22%20stroke%3D%22white%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fdfcff; --bg-tint:#f6f1fb; --card:#ffffff;
+    --line:#ece4f5; --line-strong:#dccdec;
+    --pink:#ff4d8f; --purple:#c159f5;
+    --ink:#2b1a3d; --dim:#8b7fa3;
+    --grad:linear-gradient(120deg,#ff4d8f 0%,#c159f5 100%);
+    --shadow:0 10px 40px -12px rgba(150,90,200,.22);
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:
+      radial-gradient(700px 420px at 50% -10%, #ffe9f3 0%, transparent 60%),
+      radial-gradient(600px 380px at 100% 8%, #f0e6ff 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:'Inter',sans-serif;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:22px; -webkit-font-smoothing:antialiased;
+  }
+  .card{
+    width:100%; max-width:400px; background:var(--card);
+    border:1px solid var(--line); border-radius:24px; padding:30px 26px 34px;
+    box-shadow:var(--shadow); text-align:center;
+  }
+  .logo{ display:inline-flex; align-items:center; gap:9px; margin-bottom:26px; }
+  .logo .mark{
+    width:38px; height:38px; border-radius:11px; background:var(--grad);
+    display:grid; place-items:center; box-shadow:0 6px 16px -5px rgba(255,77,143,.55);
+  }
+  .logo .mark svg{ width:22px; height:22px; }
+  .logo .word{ font-family:'Unbounded'; font-weight:800; font-size:19px; letter-spacing:-.02em; }
+  .logo .word b{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+  .title{ font-family:'Unbounded'; font-weight:700; font-size:22px; line-height:1.2; margin:0 0 8px; letter-spacing:-.01em; }
+  .counter{
+    display:inline-flex; align-items:center; gap:7px; margin:6px 0 24px;
+    font-family:'JetBrains Mono'; font-size:13px; color:var(--dim);
+    background:var(--bg-tint); padding:7px 14px; border-radius:999px;
+  }
+  .counter b{ color:var(--pink); font-size:15px; }
+
+  label.fld{ display:block; text-align:left; font-size:13px; color:var(--dim); font-weight:600; margin-bottom:7px; }
+  .input-wrap{ position:relative; margin-bottom:18px; }
+  .input-wrap .at{ position:absolute; left:15px; top:50%; transform:translateY(-50%); color:var(--dim); font-family:'JetBrains Mono'; font-size:15px; }
+  input[type=text]{
+    width:100%; padding:14px 15px 14px 32px; border:1.5px solid var(--line);
+    border-radius:13px; font-size:16px; font-family:'JetBrains Mono'; color:var(--ink);
+    background:var(--bg-tint); transition:.2s;
+  }
+  input[type=text]:focus{ outline:none; border-color:var(--pink); background:#fff; box-shadow:0 0 0 4px rgba(255,77,143,.12); }
+
+  button.join{
+    width:100%; padding:16px; border:none; border-radius:14px; background:var(--grad);
+    color:#fff; font-family:'Unbounded'; font-weight:600; font-size:16px; cursor:pointer;
+    box-shadow:0 10px 24px -8px rgba(255,77,143,.6); transition:.2s;
+  }
+  button.join:hover{ transform:translateY(-2px); }
+  button.join:disabled{ background:#d9cfe6; cursor:not-allowed; transform:none; box-shadow:none; }
+
+  .msg{ margin-top:18px; font-size:14px; line-height:1.5; min-height:20px; }
+  .msg.ok{ color:#3f9d5a; }
+  .msg.err{ color:var(--pink); }
+
+  .done-icon{ width:64px; height:64px; margin:0 auto 16px; border-radius:50%; background:var(--grad); display:grid; place-items:center; box-shadow:0 10px 26px -8px rgba(255,77,143,.5); }
+  .done-icon svg{ width:34px; height:34px; }
+
+  .foot{ margin-top:22px; font-size:11.5px; color:var(--dim); line-height:1.6; }
+  .foot b{ color:var(--ink); }
+
+  .state{ display:none; }
+  .state.active{ display:block; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <div class="mark"><svg viewBox="0 0 32 32" fill="none"><path d="M6 8 L16 24 L26 8" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="word">Vy<b>bor</b></div>
+    </div>
+
+    <!-- Загрузка -->
+    <div class="state active" id="state-loading">
+      <p class="msg">Загружаю розыгрыш…</p>
+    </div>
+
+    <!-- Форма участия -->
+    <div class="state" id="state-form">
+      <h1 class="title" id="drawTitle">Розыгрыш</h1>
+      <div class="counter">участников: <b id="pCount">0</b></div>
+
+      <label class="fld">Твой ник в Instagram</label>
+      <div class="input-wrap">
+        <span class="at">@</span>
+        <input type="text" id="username" placeholder="username" autocomplete="off" autocapitalize="off" spellcheck="false">
+      </div>
+      <button class="join" id="joinBtn">Участвовать 🎉</button>
+      <div class="msg" id="formMsg"></div>
+    </div>
+
+    <!-- Успех -->
+    <div class="state" id="state-done">
+      <div class="done-icon"><svg viewBox="0 0 32 32" fill="none"><path d="M8 17 L14 23 L24 9" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h1 class="title">Ты в игре!</h1>
+      <p class="msg ok" id="doneMsg">Ты участвуешь в розыгрыше. Победителя объявит организатор.</p>
+      <div class="counter" style="margin-top:18px;">всего участников: <b id="pCountDone">0</b></div>
+    </div>
+
+    <!-- Закрыт / завершён -->
+    <div class="state" id="state-closed">
+      <h1 class="title" id="closedTitle">Регистрация закрыта</h1>
+      <p class="msg" id="closedMsg"></p>
+    </div>
+
+    <!-- Ошибка -->
+    <div class="state" id="state-error">
+      <h1 class="title">Розыгрыш не найден</h1>
+      <p class="msg err">Проверь ссылку — возможно, она неполная или устарела.</p>
+    </div>
+
+    <div class="foot">
+      <b>Честный розыгрыш на Vybor.</b> Победитель определяется криптографическим генератором, список участников фиксируется до розыгрыша.
+    </div>
+  </div>
+
+<script>
+const API = "https://tanyatats-vybor-backend-e396.twc1.net";
+
+function show(state){
+  document.querySelectorAll('.state').forEach(s=>s.classList.remove('active'));
+  document.getElementById('state-'+state).classList.add('active');
+}
+function getCode(){
+  const p = new URLSearchParams(location.search);
+  return p.get('r') || p.get('code') || '';
+}
+
+const code = getCode();
+
+async function load(){
+  if(!code){ show('error'); return; }
+  try{
+    const res = await fetch(`${API}/api/reg-draws/${code}`);
+    if(!res.ok){ show('error'); return; }
+    const d = await res.json();
+
+    if(d.status === 'open'){
+      document.getElementById('drawTitle').textContent = d.title || 'Розыгрыш';
+      document.getElementById('pCount').textContent = d.participants_count;
+      show('form');
+    } else if(d.status === 'completed'){
+      document.getElementById('closedTitle').textContent = 'Розыгрыш завершён';
+      let msg = 'Розыгрыш уже проведён.';
+      if(d.result && d.result.winners){
+        msg = 'Победители: ' + d.result.winners.map(w=>'@'+w).join(', ');
+      }
+      document.getElementById('closedMsg').textContent = msg;
+      show('closed');
+    } else {
+      document.getElementById('closedTitle').textContent = 'Регистрация закрыта';
+      document.getElementById('closedMsg').textContent = 'Организатор закрыл приём участников. Скоро итоги!';
+      show('closed');
+    }
+  }catch(e){
+    show('error');
+  }
+}
+
+document.getElementById('joinBtn').addEventListener('click', async ()=>{
+  const raw = document.getElementById('username').value.trim().replace(/^@/,'');
+  const msg = document.getElementById('formMsg');
+  msg.className = 'msg';
+  if(!raw || !/^[A-Za-z0-9._]{1,30}$/.test(raw)){
+    msg.classList.add('err');
+    msg.textContent = 'Введи корректный ник (латиница, цифры, точка, _).';
+    return;
+  }
+  const btn = document.getElementById('joinBtn');
+  btn.disabled = true; btn.textContent = 'Записываю…';
+  try{
+    const res = await fetch(`${API}/api/reg-draws/${code}/register`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({instagram_username: raw})
+    });
+    if(res.status === 409){
+      document.getElementById('closedTitle').textContent = 'Регистрация закрыта';
+      document.getElementById('closedMsg').textContent = 'Приём участников уже завершён.';
+      show('closed'); return;
+    }
+    if(!res.ok) throw new Error('fail');
+    const d = await res.json();
+    document.getElementById('pCountDone').textContent = d.participants_count;
+    document.getElementById('doneMsg').textContent = d.already
+      ? 'Ты уже был(а) записан(а) — участвуешь один раз. Удачи!'
+      : 'Ты участвуешь в розыгрыше. Победителя объявит организатор.';
+    show('done');
+  }catch(e){
+    btn.disabled = false; btn.textContent = 'Участвовать 🎉';
+    msg.classList.add('err');
+    msg.textContent = 'Не удалось записаться. Попробуй ещё раз через секунду.';
+  }
+});
+
+// Enter отправляет форму
+document.getElementById('username').addEventListener('keydown', e=>{
+  if(e.key === 'Enter') document.getElementById('joinBtn').click();
+});
+
+load();
+</script>
+</body>
+</html>
