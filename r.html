@@ -67,6 +67,15 @@
   button.join:hover{ transform:translateY(-2px); }
   button.join:disabled{ background:#d9cfe6; cursor:not-allowed; transform:none; box-shadow:none; }
 
+  /* Блок Telegram-входа */
+  .tg-block{ margin-top:4px; }
+  .tg-wrap{ display:flex; justify-content:center; min-height:46px; margin-bottom:6px; }
+  .tg-note{ font-size:12px; color:var(--dim); line-height:1.5; margin-bottom:4px; }
+  .divider{ display:flex; align-items:center; gap:10px; margin:18px 0; color:var(--dim); font-size:12px; font-family:'JetBrains Mono'; }
+  .divider::before,.divider::after{ content:''; flex:1; height:1px; background:var(--line); }
+  .link-btn{ background:none; border:none; color:var(--dim); font-size:13px; font-family:'Inter'; cursor:pointer; text-decoration:underline; padding:4px; }
+  .link-btn:hover{ color:var(--pink); }
+
   .msg{ margin-top:18px; font-size:14px; line-height:1.5; min-height:20px; }
   .msg.ok{ color:#3f9d5a; }
   .msg.err{ color:var(--pink); }
@@ -79,6 +88,7 @@
 
   .state{ display:none; }
   .state.active{ display:block; }
+  .hidden{ display:none !important; }
 </style>
 </head>
 <body>
@@ -103,7 +113,17 @@
         <span class="at">@</span>
         <input type="text" id="username" placeholder="username" autocomplete="off" autocapitalize="off" spellcheck="false">
       </div>
+
+      <!-- Telegram-вход: появляется, если бот настроен -->
+      <div class="tg-block hidden" id="tgBlock">
+        <p class="tg-note">Подтверди, что ты настоящий человек — так розыгрыш честный для всех.</p>
+        <div class="tg-wrap" id="tgWrap"></div>
+        <button class="link-btn hidden" id="nickFallbackLink">Войти без Telegram, по нику</button>
+      </div>
+
+      <!-- Обычная кнопка: если бота нет или выбрали запасной вход -->
       <button class="join" id="joinBtn">Участвовать 🎉</button>
+
       <div class="msg" id="formMsg"></div>
     </div>
 
@@ -145,6 +165,8 @@ function getCode(){
 }
 
 const code = getCode();
+let tgEnabled = false;   // настроен ли бот
+let nickMode = false;    // участник выбрал запасной вход по нику
 
 async function load(){
   if(!code){ show('error'); return; }
@@ -156,6 +178,7 @@ async function load(){
     if(d.status === 'open'){
       document.getElementById('drawTitle').textContent = d.title || 'Розыгрыш';
       document.getElementById('pCount').textContent = d.participants_count;
+      setupEntry(d.telegram_bot);
       show('form');
     } else if(d.status === 'completed'){
       document.getElementById('closedTitle').textContent = 'Розыгрыш завершён';
@@ -175,16 +198,105 @@ async function load(){
   }
 }
 
-document.getElementById('joinBtn').addEventListener('click', async ()=>{
+// Решаем, как показывать вход: Telegram или сразу кнопку по нику
+function setupEntry(botUsername){
+  const tgBlock = document.getElementById('tgBlock');
+  const joinBtn = document.getElementById('joinBtn');
+  const fallbackLink = document.getElementById('nickFallbackLink');
+
+  if(botUsername){
+    tgEnabled = true;
+    // Показываем блок Telegram, прячем обычную кнопку
+    tgBlock.classList.remove('hidden');
+    joinBtn.classList.add('hidden');
+    fallbackLink.classList.remove('hidden');
+
+    // Официальный виджет Telegram. После входа вызовет onTelegramAuth(user).
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://telegram.org/js/telegram-widget.js?22';
+    s.setAttribute('data-telegram-login', botUsername);
+    s.setAttribute('data-size', 'large');
+    s.setAttribute('data-radius', '14');
+    s.setAttribute('data-onauth', 'onTelegramAuth(user)');
+    s.setAttribute('data-request-access', 'write');
+    document.getElementById('tgWrap').appendChild(s);
+
+    // Запасной вход по нику
+    fallbackLink.addEventListener('click', ()=>{
+      nickMode = true;
+      tgBlock.classList.add('hidden');
+      joinBtn.classList.remove('hidden');
+      joinBtn.focus();
+    });
+  } else {
+    // Бота нет — работает как раньше, обычная регистрация по нику
+    tgEnabled = false;
+    tgBlock.classList.add('hidden');
+    joinBtn.classList.remove('hidden');
+  }
+}
+
+function validNick(){
   const raw = document.getElementById('username').value.trim().replace(/^@/,'');
   const msg = document.getElementById('formMsg');
   msg.className = 'msg';
   if(!raw || !/^[A-Za-z0-9._]{1,30}$/.test(raw)){
     msg.classList.add('err');
     msg.textContent = 'Введи корректный ник (латиница, цифры, точка, _).';
+    return null;
+  }
+  return raw;
+}
+
+function renderDone(d){
+  document.getElementById('pCountDone').textContent = d.participants_count;
+  document.getElementById('doneMsg').textContent = d.already
+    ? 'Ты уже был(а) записан(а) — участвуешь один раз. Удачи!'
+    : 'Ты участвуешь в розыгрыше. Победителя объявит организатор.';
+  show('done');
+}
+
+// ── Вход через Telegram ─────────────────────────────────────────
+window.onTelegramAuth = async (user)=>{
+  const raw = validNick();
+  if(!raw){
+    // Ник не введён — Telegram подтверждён, но нужен ник для результатов
+    document.getElementById('username').focus();
     return;
   }
+  const msg = document.getElementById('formMsg');
+  msg.className = 'msg'; msg.textContent = 'Проверяю вход…';
+  try{
+    const res = await fetch(`${API}/api/reg-draws/${code}/register-telegram`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ instagram_username: raw, ...user })
+    });
+    if(res.status === 409){
+      document.getElementById('closedTitle').textContent = 'Регистрация закрыта';
+      document.getElementById('closedMsg').textContent = 'Приём участников уже завершён.';
+      show('closed'); return;
+    }
+    if(res.status === 403){
+      msg.classList.add('err');
+      msg.textContent = 'Не удалось подтвердить вход через Telegram. Попробуй ещё раз.';
+      return;
+    }
+    if(!res.ok) throw new Error('fail');
+    renderDone(await res.json());
+  }catch(e){
+    msg.classList.add('err');
+    msg.textContent = 'Не удалось записаться. Попробуй ещё раз через секунду.';
+  }
+};
+
+// ── Вход по нику (запасной / когда бота нет) ────────────────────
+document.getElementById('joinBtn').addEventListener('click', async ()=>{
+  const raw = validNick();
+  if(!raw) return;
+
   const btn = document.getElementById('joinBtn');
+  const msg = document.getElementById('formMsg');
   btn.disabled = true; btn.textContent = 'Записываю…';
   try{
     const res = await fetch(`${API}/api/reg-draws/${code}/register`, {
@@ -197,12 +309,7 @@ document.getElementById('joinBtn').addEventListener('click', async ()=>{
       show('closed'); return;
     }
     if(!res.ok) throw new Error('fail');
-    const d = await res.json();
-    document.getElementById('pCountDone').textContent = d.participants_count;
-    document.getElementById('doneMsg').textContent = d.already
-      ? 'Ты уже был(а) записан(а) — участвуешь один раз. Удачи!'
-      : 'Ты участвуешь в розыгрыше. Победителя объявит организатор.';
-    show('done');
+    renderDone(await res.json());
   }catch(e){
     btn.disabled = false; btn.textContent = 'Участвовать 🎉';
     msg.classList.add('err');
@@ -210,12 +317,29 @@ document.getElementById('joinBtn').addEventListener('click', async ()=>{
   }
 });
 
-// Enter отправляет форму
+// Enter в поле ника: если виден Telegram — ничего не шлём (ждём кнопку
+// Telegram), иначе жмём обычную кнопку
 document.getElementById('username').addEventListener('keydown', e=>{
-  if(e.key === 'Enter') document.getElementById('joinBtn').click();
+  if(e.key === 'Enter' && !document.getElementById('joinBtn').classList.contains('hidden')){
+    document.getElementById('joinBtn').click();
+  }
 });
 
 load();
 </script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111067223', 'ym');
+
+    ym(111067223, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/111067223" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </body>
 </html>
