@@ -2,23 +2,19 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="yandex-verification" content="1e87c92fe23da284" />
-<title>Vybor — честные розыгрыши в Instagram | Сервис случайного выбора</title>
-<meta name="description" content="Прозрачный сервис розыгрышей. Криптографическая случайность, проверяемые сертификаты. Прими участие или создай свой розыгрыш.">
-<meta name="keywords" content="розыгрыш инстаграм, генератор победителей, честный розыгрыш, vybor, выбор победителя">
+<title>Создать розыгрыш — Vybor | Честный сервис розыгрышей Instagram</title>
+<meta name="description" content="Создайте розыгрыш с автоматической регистрацией участников и криптографически честным выбором победителя. Оплата 149 ₽ за розыгрыш.">
+<meta name="keywords" content="создать розыгрыш, розыгрыш инстаграм, генератор победителей, vybor">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ff4d8f%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c159f5%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2226%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M26%2030%20L50%2072%20L74%2030%22%20stroke%3D%22white%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22/%3E%3C/svg%3E">
-<link rel="canonical" href="https://tanyatats.github.io/vybor-site/">
-<meta property="og:title" content="Vybor — честные розыгрыши в Instagram">
-<meta property="og:description" content="Прозрачный генератор победителей с проверяемой случайностью.">
-<meta property="og:url" content="https://tanyatats.github.io/vybor-site/">
+<link rel="canonical" href="https://tanyatats.github.io/vybor-site/create.html">
+<meta property="og:title" content="Создать розыгрыш — Vybor">
+<meta property="og:description" content="Прозрачный розыгрыш с автоматической регистрацией и честным выбором.">
+<meta property="og:url" content="https://tanyatats.github.io/vybor-site/create.html">
 <meta property="og:image" content="https://tanyatats.github.io/vybor-site/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Vybor — честный сервис розыгрышей">
-<meta name="twitter:description" content="Прозрачный генератор победителей с проверяемой случайностью.">
-<meta name="twitter:image" content="https://tanyatats.github.io/vybor-site/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
   :root{
     --bg:#fdfcff; --bg-tint:#f6f1fb; --card:#ffffff;
@@ -36,13 +32,9 @@
   body{
     background:var(--bg);
     color:var(--ink); font-family:'Inter',sans-serif;
-    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden; min-height:100vh;
   }
   a{ color:inherit; text-decoration:none; }
-
-  /* ---------- ЛЕНДИНГ ---------- */
-  #landing{ display:none; }
-  #landing.active{ display:block; }
 
   /* Навбар */
   .nav{
@@ -54,202 +46,95 @@
   }
   .nav.scrolled{ border-color:var(--line); box-shadow:0 4px 24px -16px rgba(150,90,200,.4); }
   .brand{ display:inline-flex; align-items:center; gap:10px; }
-  .brand .mark{
-    width:38px; height:38px; border-radius:11px; background:var(--grad);
-    display:grid; place-items:center; box-shadow:0 6px 16px -5px rgba(255,77,143,.55);
-  }
+  .brand .mark{ width:38px; height:38px; border-radius:11px; background:var(--grad); display:grid; place-items:center; box-shadow:0 6px 16px -5px rgba(255,77,143,.55); }
   .brand .mark svg{ width:22px; height:22px; }
   .brand .word{ font-family:'Unbounded'; font-weight:800; font-size:20px; letter-spacing:-.02em; }
   .brand .word b{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .nav-cta{
-    padding:11px 22px; border-radius:12px; background:var(--grad); color:#fff;
-    font-family:'Unbounded'; font-weight:500; font-size:14px;
-    box-shadow:0 8px 20px -8px rgba(255,77,143,.6); transition:transform .2s;
-  }
-  .nav-cta:hover{ transform:translateY(-2px); }
+  .nav-link{ font-family:'Unbounded'; font-weight:500; font-size:14px; color:var(--dim); transition:color .2s; }
+  .nav-link:hover{ color:var(--pink); }
 
-  /* Герой */
-  .hero{
-    position:relative; min-height:100vh; display:flex; flex-direction:column;
-    align-items:center; justify-content:center; text-align:center;
-    padding:120px 6vw 80px; overflow:hidden;
-  }
-  .hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; }
-  .blob{ position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; }
-  .blob.b1{ width:520px; height:520px; background:#ffd9e8; top:-140px; left:-120px; animation:float1 14s ease-in-out infinite; }
-  .blob.b2{ width:460px; height:460px; background:#e9d4ff; top:-80px; right:-100px; animation:float2 16s ease-in-out infinite; }
-  .blob.b3{ width:400px; height:400px; background:#ffe4f0; bottom:-160px; left:40%; animation:float1 18s ease-in-out infinite; }
+  /* Фон-блобы */
+  .bg-blobs{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .blob{ position:absolute; border-radius:50%; filter:blur(80px); opacity:.5; }
+  .blob.b1{ width:520px; height:520px; background:#ffd9e8; top:-160px; left:-120px; animation:float1 15s ease-in-out infinite; }
+  .blob.b2{ width:440px; height:440px; background:#e9d4ff; top:-60px; right:-120px; animation:float2 17s ease-in-out infinite; }
   @keyframes float1{ 0%,100%{ transform:translate(0,0);} 50%{ transform:translate(30px,40px);} }
   @keyframes float2{ 0%,100%{ transform:translate(0,0);} 50%{ transform:translate(-40px,30px);} }
 
-  /* Конфетти-точки — signature */
-  .confetti{ position:absolute; inset:0; z-index:1; pointer-events:none; }
-  .dot{ position:absolute; width:10px; height:10px; border-radius:50%; opacity:0; animation:rise linear infinite; }
-  @keyframes rise{
-    0%{ transform:translateY(40px) scale(.6); opacity:0; }
-    10%{ opacity:.9; }
-    90%{ opacity:.9; }
-    100%{ transform:translateY(-120px) scale(1); opacity:0; }
-  }
+  /* Обёртка контента */
+  .wrap{ position:relative; z-index:1; max-width:600px; margin:0 auto; padding:130px 20px 80px; }
 
-  .hero-inner{ position:relative; z-index:2; max-width:960px; }
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px; margin-bottom:26px;
-    padding:8px 18px; border-radius:999px; background:#fff; border:1px solid var(--line);
-    font-family:'JetBrains Mono'; font-size:13px; color:var(--purple); font-weight:600;
-    box-shadow:var(--shadow); opacity:0; animation:fadeUp .7s .1s forwards;
-  }
-  .eyebrow .live-dot{ width:8px; height:8px; border-radius:50%; background:var(--pink); animation:blink 1.4s infinite; }
-  @keyframes blink{ 0%,100%{ opacity:1;} 50%{ opacity:.3;} }
-
-  .hero h1{
-    font-family:'Unbounded'; font-weight:900; letter-spacing:-.03em; line-height:.98;
-    font-size:clamp(48px, 9vw, 116px); margin:0 0 26px;
-  }
-  .hero h1 .l1{ display:block; opacity:0; animation:fadeUp .8s .2s forwards; }
-  .hero h1 .l2{
-    display:block; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
-    opacity:0; animation:fadeUp .8s .35s forwards;
-  }
-  .hero p.sub{
-    font-size:clamp(17px,2.2vw,22px); color:var(--dim); max-width:600px; margin:0 auto 40px;
-    line-height:1.55; opacity:0; animation:fadeUp .8s .5s forwards;
-  }
-  .hero-actions{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; opacity:0; animation:fadeUp .8s .65s forwards; }
-  .btn-primary{
-    padding:18px 40px; border-radius:16px; background:var(--grad); color:#fff;
-    font-family:'Unbounded'; font-weight:600; font-size:17px; border:none; cursor:pointer;
-    box-shadow:0 14px 34px -10px rgba(255,77,143,.6); transition:transform .2s, box-shadow .2s;
-  }
-  .btn-primary:hover{ transform:translateY(-3px); box-shadow:0 20px 44px -12px rgba(255,77,143,.7); }
-  .btn-ghost{
-    padding:18px 34px; border-radius:16px; background:#fff; color:var(--ink);
-    font-family:'Unbounded'; font-weight:500; font-size:17px; border:1.5px solid var(--line-strong); cursor:pointer;
-    transition:border-color .2s, color .2s;
-  }
-  .btn-ghost:hover{ border-color:var(--pink); color:var(--pink); }
-
+  .page-head{ text-align:center; margin-bottom:36px; opacity:0; animation:fadeUp .7s .1s forwards; }
+  .page-head .tag{ font-family:'JetBrains Mono'; font-size:13px; color:var(--purple); font-weight:600; letter-spacing:.1em; text-transform:uppercase; }
+  .page-head h1{ font-family:'Unbounded'; font-weight:900; letter-spacing:-.02em; line-height:1.02; font-size:clamp(34px,7vw,60px); margin:14px 0 0; }
+  .page-head h1 em{ font-style:normal; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .page-head p.lead{ color:var(--dim); font-size:17px; line-height:1.55; margin:16px auto 0; max-width:440px; }
   @keyframes fadeUp{ from{ opacity:0; transform:translateY(28px);} to{ opacity:1; transform:translateY(0);} }
 
-  /* Строка статистики под героем */
-  .hero-stats{
-    display:flex; gap:44px; justify-content:center; flex-wrap:wrap; margin-top:64px;
-    opacity:0; animation:fadeUp .8s .8s forwards;
-  }
-  .stat{ text-align:center; }
-  .stat .num{ font-family:'Unbounded'; font-weight:800; font-size:34px; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .stat .lbl{ font-family:'JetBrains Mono'; font-size:12px; color:var(--dim); text-transform:uppercase; letter-spacing:.08em; margin-top:4px; }
-
-  /* Секции */
-  section.block{ padding:110px 6vw; max-width:1180px; margin:0 auto; }
-  .section-head{ text-align:center; margin-bottom:64px; }
-  .section-head .tag{ font-family:'JetBrains Mono'; font-size:13px; color:var(--purple); font-weight:600; letter-spacing:.1em; text-transform:uppercase; }
-  .section-head h2{ font-family:'Unbounded'; font-weight:800; font-size:clamp(30px,5vw,52px); letter-spacing:-.02em; margin:12px 0 0; line-height:1.1; }
-  .section-head h2 em{ font-style:normal; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
-
-  /* Как работает — 3 шага */
-  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
-  .step{
-    position:relative; background:var(--card); border:1px solid var(--line); border-radius:22px;
-    padding:38px 30px; box-shadow:var(--shadow); overflow:hidden;
-    opacity:0; transform:translateY(30px); transition:opacity .6s, transform .6s;
-  }
-  .step.in{ opacity:1; transform:translateY(0); }
-  .step .n{
-    font-family:'Unbounded'; font-weight:900; font-size:56px; line-height:1;
-    background:var(--grad-soft); -webkit-background-clip:text; background-clip:text; color:transparent; opacity:.55;
-  }
-  .step h3{ font-family:'Unbounded'; font-weight:700; font-size:21px; margin:16px 0 10px; letter-spacing:-.01em; }
-  .step p{ color:var(--dim); font-size:15px; line-height:1.6; margin:0; }
-  .step .ico{ position:absolute; top:32px; right:30px; font-size:30px; }
-
-  /* Фичи-полоса */
-  .features{ display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:56px; }
-  .feat{
-    display:inline-flex; align-items:center; gap:10px; background:var(--bg-tint);
-    padding:14px 22px; border-radius:14px; font-weight:600; font-size:15px;
-  }
-  .feat .fico{ font-size:19px; }
-
-  /* FAQ */
-  .faq-list{ max-width:780px; margin:0 auto; }
-  .faq-item{ border:1px solid var(--line); border-radius:18px; background:#fff; margin-bottom:14px; overflow:hidden; box-shadow:var(--shadow); }
-  .faq-q{
-    width:100%; text-align:left; background:none; border:none; cursor:pointer;
-    padding:24px 28px; font-family:'Unbounded'; font-weight:500; font-size:17px; color:var(--ink);
-    display:flex; align-items:center; justify-content:space-between; gap:16px;
-  }
-  .faq-q .chev{ flex-shrink:0; width:24px; height:24px; transition:transform .3s; color:var(--purple); }
-  .faq-item.open .faq-q .chev{ transform:rotate(180deg); }
-  .faq-a{ max-height:0; overflow:hidden; transition:max-height .35s ease; }
-  .faq-a p{ padding:0 28px 24px; margin:0; color:var(--dim); font-size:15px; line-height:1.65; }
-
-  /* CTA-финал */
-  .cta-final{
-    max-width:1080px; margin:0 auto 90px; padding:70px 40px; border-radius:32px;
-    background:var(--grad); text-align:center; color:#fff; position:relative; overflow:hidden;
-    box-shadow:var(--shadow-lg);
-  }
-  .cta-final::before{ content:''; position:absolute; inset:0; background:radial-gradient(600px 300px at 50% -20%, rgba(255,255,255,.25), transparent 60%); }
-  .cta-final h2{ position:relative; font-family:'Unbounded'; font-weight:900; font-size:clamp(28px,5vw,48px); margin:0 0 16px; letter-spacing:-.02em; }
-  .cta-final p{ position:relative; font-size:18px; opacity:.92; margin:0 0 32px; }
-  .cta-final .btn-white{
-    position:relative; display:inline-block; padding:18px 44px; border-radius:16px; background:#fff; color:var(--pink);
-    font-family:'Unbounded'; font-weight:700; font-size:17px; box-shadow:0 16px 40px -12px rgba(0,0,0,.3); transition:transform .2s;
-  }
-  .cta-final .btn-white:hover{ transform:translateY(-3px); }
-
-  /* Футер */
-  footer.site{ border-top:1px solid var(--line); padding:50px 6vw; text-align:center; color:var(--dim); font-size:13px; line-height:1.9; }
-  footer.site .fbrand{ font-family:'Unbounded'; font-weight:800; font-size:18px; margin-bottom:14px; }
-  footer.site .fbrand b{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  footer.site .flinks a{ color:var(--purple); margin:0 4px; }
-  footer.site .flinks a:hover{ text-decoration:underline; }
-
-  /* ---------- ФОРМА УЧАСТИЯ (по ссылке ?r=) ---------- */
-  #app{ display:none; min-height:100vh; align-items:center; justify-content:center; padding:22px;
-    background:
-      radial-gradient(700px 420px at 50% -10%, #ffe9f3 0%, transparent 60%),
-      radial-gradient(600px 380px at 100% 8%, #f0e6ff 0%, transparent 55%),
-      var(--bg);
-  }
-  #app.active{ display:flex; }
   .card{
-    width:100%; max-width:400px; background:var(--card);
-    border:1px solid var(--line); border-radius:24px; padding:30px 26px 34px;
-    box-shadow:var(--shadow); text-align:center;
+    background:var(--card); border:1px solid var(--line); border-radius:26px; padding:36px;
+    box-shadow:var(--shadow-lg); opacity:0; animation:fadeUp .7s .25s forwards;
   }
-  .card .logo{ display:inline-flex; align-items:center; gap:9px; margin-bottom:26px; }
-  .card .logo .mark{ width:38px; height:38px; border-radius:11px; background:var(--grad); display:grid; place-items:center; box-shadow:0 6px 16px -5px rgba(255,77,143,.55); }
-  .card .logo .mark svg{ width:22px; height:22px; }
-  .card .logo .word{ font-family:'Unbounded'; font-weight:800; font-size:19px; letter-spacing:-.02em; }
-  .card .logo .word b{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .card .title{ font-family:'Unbounded'; font-weight:700; font-size:22px; line-height:1.2; margin:0 0 8px; letter-spacing:-.01em; }
-  .counter{ display:inline-flex; align-items:center; gap:7px; margin:6px 0 24px; font-family:'JetBrains Mono'; font-size:13px; color:var(--dim); background:var(--bg-tint); padding:7px 14px; border-radius:999px; }
-  .counter b{ color:var(--pink); font-size:15px; }
-  label.fld{ display:block; text-align:left; font-size:13px; color:var(--dim); font-weight:600; margin-bottom:7px; }
-  .input-wrap{ position:relative; margin-bottom:18px; }
-  .input-wrap .at{ position:absolute; left:15px; top:50%; transform:translateY(-50%); color:var(--dim); font-family:'JetBrains Mono'; font-size:15px; }
-  input[type=text]{ width:100%; padding:14px 15px 14px 32px; border:1.5px solid var(--line); border-radius:13px; font-size:16px; font-family:'JetBrains Mono'; color:var(--ink); background:var(--bg-tint); transition:.2s; }
-  input[type=text]:focus{ outline:none; border-color:var(--pink); background:#fff; box-shadow:0 0 0 4px rgba(255,77,143,.12); }
-  button.join{ width:100%; padding:16px; border:none; border-radius:14px; background:var(--grad); color:#fff; font-family:'Unbounded'; font-weight:600; font-size:16px; cursor:pointer; box-shadow:0 10px 24px -8px rgba(255,77,143,.6); transition:.2s; }
-  button.join:hover{ transform:translateY(-2px); }
-  button.join:disabled{ background:#d9cfe6; cursor:not-allowed; transform:none; box-shadow:none; }
-  .msg{ margin-top:18px; font-size:14px; line-height:1.5; min-height:20px; }
-  .msg.ok{ color:#3f9d5a; }
+
+  label.fld{ display:block; font-size:13px; color:var(--dim); font-weight:600; margin:0 0 8px; }
+  input[type=text],input[type=email],input[type=number]{
+    width:100%; padding:15px 16px; border:1.5px solid var(--line); border-radius:14px;
+    font-size:16px; font-family:'Inter'; color:var(--ink); background:var(--bg-tint); transition:.2s; margin-bottom:20px;
+  }
+  input:focus{ outline:none; border-color:var(--pink); background:#fff; box-shadow:0 0 0 4px rgba(255,77,143,.12); }
+  .two{ display:flex; gap:16px; }
+  .two > div{ flex:1; }
+
+  button.primary{
+    width:100%; padding:17px; border:none; border-radius:15px; background:var(--grad);
+    color:#fff; font-family:'Unbounded'; font-weight:600; font-size:16px; cursor:pointer;
+    box-shadow:0 12px 28px -8px rgba(255,77,143,.6); transition:transform .2s, box-shadow .2s;
+  }
+  button.primary:hover{ transform:translateY(-2px); box-shadow:0 18px 36px -10px rgba(255,77,143,.7); }
+  button.primary:disabled{ background:#d9cfe6; cursor:not-allowed; transform:none; box-shadow:none; }
+  button.ghost{
+    width:100%; padding:15px; border:1.5px solid var(--line-strong); background:var(--card);
+    color:var(--dim); border-radius:15px; font-family:'Unbounded'; font-weight:500; font-size:14px; cursor:pointer; transition:.2s; margin-top:12px;
+  }
+  button.ghost:hover{ border-color:var(--pink); color:var(--pink); }
+
+  .link-box{ display:flex; gap:8px; margin:8px 0 20px; }
+  .link-box input{ margin:0; font-family:'JetBrains Mono'; font-size:13px; }
+  .copy-btn{ flex-shrink:0; padding:0 20px; border:none; border-radius:14px; background:var(--grad); color:#fff; font-weight:600; cursor:pointer; font-family:'Inter'; font-size:13px; }
+
+  #qrcode{ display:flex; justify-content:center; margin:22px 0; }
+  #qrcode img,#qrcode canvas{ border-radius:16px; border:1px solid var(--line); padding:12px; background:#fff; }
+
+  .counter-big{ text-align:center; margin:28px 0; }
+  .counter-big .num{ font-family:'Unbounded'; font-weight:900; font-size:64px; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1; }
+  .counter-big .lbl{ font-family:'JetBrains Mono'; font-size:12px; color:var(--dim); text-transform:uppercase; letter-spacing:.1em; margin-top:8px; }
+  .live{ display:inline-flex; align-items:center; gap:6px; font-size:12px; color:#3f9d5a; font-family:'JetBrains Mono'; margin-top:10px; }
+  .live::before{ content:''; width:7px; height:7px; border-radius:50%; background:#3f9d5a; animation:pulse 1.4s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+  .tickets{ display:grid; grid-template-columns:1fr; gap:14px; margin:22px 0; }
+  .ticket{ background:linear-gradient(160deg,#fff,#fdf4fa); border:1.5px solid var(--line-strong); border-radius:16px; padding:18px 20px; text-align:center; box-shadow:0 4px 18px -8px rgba(150,90,200,.25); animation:fadeUp .5s forwards; }
+  .ticket .rank{ font-family:'JetBrains Mono'; font-size:11px; color:var(--dim); letter-spacing:.1em; text-transform:uppercase; }
+  .ticket .name{ font-family:'Unbounded'; font-size:21px; margin-top:6px; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .ticket.reserve{ background:var(--bg-tint); border-style:dashed; }
+  .ticket.reserve .name{ background:none; -webkit-text-fill-color:var(--dim); color:var(--dim); font-size:17px; }
+
+  .msg{ text-align:center; font-size:14px; margin-top:16px; min-height:18px; }
   .msg.err{ color:var(--pink); }
-  .done-icon{ width:64px; height:64px; margin:0 auto 16px; border-radius:50%; background:var(--grad); display:grid; place-items:center; box-shadow:0 10px 26px -8px rgba(255,77,143,.5); }
-  .done-icon svg{ width:34px; height:34px; }
-  .card .foot{ margin-top:22px; font-size:11.5px; color:var(--dim); line-height:1.6; }
-  .card .foot b{ color:var(--ink); }
-  .card .foot a{ color:var(--pink); }
+  .hint{ font-size:12px; color:var(--dim); text-align:center; line-height:1.6; margin-top:16px; }
+
+  #emailBlock{ margin-top:18px; }
+
   .state{ display:none; }
   .state.active{ display:block; }
 
-  @media (max-width:820px){
-    .steps{ grid-template-columns:1fr; }
-    .hero-stats{ gap:28px; }
-    .nav{ padding:16px 5vw; }
+  footer.site{ position:relative; z-index:1; border-top:1px solid var(--line); padding:40px 6vw; text-align:center; color:var(--dim); font-size:13px; line-height:1.9; margin-top:40px; }
+  footer.site a{ color:var(--purple); margin:0 4px; }
+  footer.site a:hover{ text-decoration:underline; }
+
+  @media (max-width:560px){
+    .wrap{ padding:110px 16px 60px; }
+    .card{ padding:26px 22px; }
   }
   @media (prefers-reduced-motion:reduce){
     *{ animation-duration:.001s !important; animation-iteration-count:1 !important; }
@@ -259,295 +144,309 @@
 </head>
 <body>
 
-<!-- ================= ЛЕНДИНГ ================= -->
-<div id="landing">
-  <nav class="nav" id="nav">
-    <a href="#top" class="brand">
-      <span class="mark"><svg viewBox="0 0 32 32" fill="none"><path d="M6 8 L16 24 L26 8" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <span class="word">Vy<b>bor</b></span>
-    </a>
-    <a href="create.html" class="nav-cta">Создать розыгрыш</a>
-  </nav>
+<div class="bg-blobs"><span class="blob b1"></span><span class="blob b2"></span></div>
 
-  <header class="hero" id="top">
-    <div class="hero-bg">
-      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+<nav class="nav" id="nav">
+  <a href="index.html" class="brand">
+    <span class="mark"><svg viewBox="0 0 32 32" fill="none"><path d="M6 8 L16 24 L26 8" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="word">Vy<b>bor</b></span>
+  </a>
+  <a href="index.html" class="nav-link">На главную</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- 1. Создание -->
+  <div class="state active" id="state-create">
+    <div class="page-head">
+      <span class="tag">Новый розыгрыш</span>
+      <h1>Создай <em>честный</em> розыгрыш</h1>
+      <p class="lead">Заполни поля, поделись ссылкой — участники зарегистрируются сами.</p>
     </div>
-    <div class="confetti" id="confetti"></div>
+    <div class="card">
+      <label class="fld">Название розыгрыша</label>
+      <input type="text" id="title" placeholder="Например: Розыгрыш от @моя_страница">
 
-    <div class="hero-inner">
-      <span class="eyebrow"><span class="live-dot"></span> Честность подтверждается сертификатом</span>
-      <h1>
-        <span class="l1">Розыгрыши,</span>
-        <span class="l2">которым верят</span>
-      </h1>
-      <p class="sub">Проведи розыгрыш в Instagram, где победителя выбирает криптографический генератор — а не ты. Каждый результат можно проверить.</p>
-      <div class="hero-actions">
-        <a href="create.html"><button class="btn-primary">Создать розыгрыш — 149 ₽</button></a>
-        <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView()">Как это работает</button>
+      <div class="two">
+        <div>
+          <label class="fld">Победителей</label>
+          <input type="number" id="winners" min="1" value="1">
+        </div>
+        <div>
+          <label class="fld">Запасных</label>
+          <input type="number" id="reserves" min="0" value="1">
+        </div>
       </div>
 
-      <div class="hero-stats">
-        <div class="stat"><div class="num">SHA-256</div><div class="lbl">фиксация списка</div></div>
-        <div class="stat"><div class="num">100%</div><div class="lbl">случайный выбор</div></div>
-        <div class="stat"><div class="num">149 ₽</div><div class="lbl">за розыгрыш</div></div>
-      </div>
+      <button class="primary" id="createBtn">Создать розыгрыш →</button>
+      <div class="msg" id="createMsg"></div>
     </div>
-  </header>
-
-  <section class="block" id="how">
-    <div class="section-head">
-      <span class="tag">Как это работает</span>
-      <h2>Три шага до <em>честного</em> победителя</h2>
-    </div>
-    <div class="steps">
-      <div class="step"><span class="ico">✏️</span><div class="n">1</div><h3>Создай розыгрыш</h3><p>Укажи название и число победителей. Получишь ссылку и QR-код, чтобы поделиться в сторис или посте.</p></div>
-      <div class="step"><span class="ico">👥</span><div class="n">2</div><h3>Собери участников</h3><p>Люди переходят по ссылке и регистрируются сами. Счётчик участников обновляется в реальном времени.</p></div>
-      <div class="step"><span class="ico">🎲</span><div class="n">3</div><h3>Запусти розыгрыш</h3><p>Список фиксируется хешем, генератор выбирает победителя, а ты получаешь сертификат честности.</p></div>
-    </div>
-
-    <div class="features">
-      <span class="feat"><span class="fico">🔒</span> Пароли не нужны</span>
-      <span class="feat"><span class="fico">📋</span> Список нельзя подменить</span>
-      <span class="feat"><span class="fico">📜</span> Сертификат с меткой времени</span>
-      <span class="feat"><span class="fico">📱</span> Работает с телефона</span>
-    </div>
-  </section>
-
-  <section class="block" id="faq">
-    <div class="section-head">
-      <span class="tag">Вопросы</span>
-      <h2>Коротко о <em>главном</em></h2>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-q">Это правда честно? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="faq-a"><p>Да. Перед выбором победителя весь список участников фиксируется криптографическим хешем SHA-256 с меткой времени. Изменить список после этого незаметно невозможно, а сам выбор делает генератор случайных чисел, а не человек.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Нужны ли пароли от Instagram? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="faq-a"><p>Нет. Мы не запрашиваем и не храним пароли. Участник просто указывает свой ник, а для защиты от накрутки может подтвердить, что он реальный человек, через Telegram.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Сколько стоит? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="faq-a"><p>149 ₽ за один розыгрыш. Оплата разовая, через ЮKassa, с электронным чеком. Регистрация участников и сбор списка — бесплатны, платёж только за проведение розыгрыша.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Что получают участники? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="faq-a"><p>Участник переходит по твоей ссылке, регистрируется в один тап и видит счётчик участников. После розыгрыша по той же ссылке отображаются победители — прозрачно для всех.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Можно выбрать несколько победителей? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="faq-a"><p>Да. При создании розыгрыша указываешь любое число победителей и запасных — на случай, если основной победитель не выйдет на связь.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="cta-final">
-    <h2>Готов провести розыгрыш?</h2>
-    <p>Создание займёт минуту. Оплата — только когда решишь запустить.</p>
-    <a href="create.html" class="btn-white">Создать розыгрыш</a>
   </div>
 
-  <footer class="site">
-    <div class="fbrand">Vy<b>bor</b></div>
-    <div>Честный розыгрыш. Победителя определяет криптографический генератор, список фиксируется до старта.</div>
-    <div class="flinks" style="margin-top:12px;">
-      <a href="oferta.html">Оферта</a> |
-      <a href="privacy.html">Политика конфиденциальности</a> |
-      <a href="terms.html">Условия использования</a> |
-      <a href="contacts.html">Контакты</a> |
-      <a href="requisites.html">Реквизиты</a>
+  <!-- 2. Ссылка + управление -->
+  <div class="state" id="state-manage">
+    <div class="page-head">
+      <span class="tag">Розыгрыш создан 🎉</span>
+      <h1 id="mgTitle">Собирай <em>участников</em></h1>
+      <p class="lead">Поделись ссылкой в сторис или посте — участники перейдут и зарегистрируются.</p>
     </div>
-  </footer>
-</div>
-
-<!-- ================= ФОРМА УЧАСТИЯ (по ссылке ?r=код) ================= -->
-<div id="app">
-  <div class="card">
-    <div class="logo">
-      <div class="mark"><svg viewBox="0 0 32 32" fill="none"><path d="M6 8 L16 24 L26 8" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="word">Vy<b>bor</b></div>
-    </div>
-
-    <div class="state" id="state-loading"><p class="msg">Загружаю розыгрыш…</p></div>
-
-    <div class="state" id="state-form">
-      <h1 class="title" id="drawTitle">Розыгрыш</h1>
-      <div class="counter">участников: <b id="pCount">0</b></div>
-      <label class="fld">Твой ник в Instagram</label>
-      <div class="input-wrap">
-        <span class="at">@</span>
-        <input type="text" id="username" placeholder="username" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div class="card">
+      <label class="fld">Ссылка для участников</label>
+      <div class="link-box">
+        <input type="text" id="shareLink" readonly>
+        <button class="copy-btn" id="copyLink">Копировать</button>
       </div>
-      <button class="join" id="joinBtn">Участвовать 🎉</button>
-      <div class="msg" id="formMsg"></div>
-    </div>
 
-    <div class="state" id="state-done">
-      <div class="done-icon"><svg viewBox="0 0 32 32" fill="none"><path d="M8 17 L14 23 L24 9" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h1 class="title">Ты в игре!</h1>
-      <p class="msg ok" id="doneMsg">Ты участвуешь в розыгрыше. Победителя объявит организатор.</p>
-      <div class="counter" style="margin-top:18px;">всего участников: <b id="pCountDone">0</b></div>
-    </div>
+      <div id="qrcode"></div>
+      <p class="hint">Покажи QR-код в сторис — участники отсканируют его камерой телефона.</p>
 
-    <div class="state" id="state-closed">
-      <h1 class="title" id="closedTitle">Регистрация закрыта</h1>
-      <p class="msg" id="closedMsg"></p>
-    </div>
+      <div class="counter-big">
+        <div class="num" id="liveCount">0</div>
+        <div class="lbl">участников зарегистрировалось</div>
+        <div class="live">обновляется автоматически</div>
+      </div>
 
-    <div class="state" id="state-error">
-      <h1 class="title">Розыгрыш не найден</h1>
-      <p class="msg err">Проверь ссылку — возможно, она неполная или устарела.</p>
-    </div>
+      <button class="primary" id="drawBtn">🎲 Провести розыгрыш</button>
 
-    <div class="foot">
-      <b>Честный розыгрыш на Vybor.</b> Победитель определяется криптографическим генератором, список участников фиксируется до розыгрыша.<br><br>
-      <a href="index.html">На главную</a>
+      <div id="emailBlock" style="display:none;">
+        <label class="fld" style="margin-top:18px;">Email для чека</label>
+        <input type="email" id="emailInput" placeholder="you@example.com">
+        <button class="primary" id="payBtn">Оплатить 149 ₽ и провести розыгрыш</button>
+        <p class="hint">Электронный чек обязателен по закону. После оплаты вы сразу получите победителей.</p>
+      </div>
+
+      <button class="ghost" id="refreshBtn">Обновить счётчик вручную</button>
+      <div class="msg" id="mgMsg"></div>
     </div>
   </div>
+
+  <!-- 3. Результат -->
+  <div class="state" id="state-result">
+    <div class="page-head">
+      <span class="tag">Результаты 🏆</span>
+      <h1>Победитель <em>выбран</em></h1>
+      <p class="lead" id="resultLead"></p>
+    </div>
+    <div class="card">
+      <div class="tickets" id="tickets"></div>
+      <button class="primary" id="copyResult">Скопировать победителей</button>
+      <button class="ghost" id="certBtn">📄 Скачать сертификат честности</button>
+      <button class="ghost" id="newBtn">Создать новый розыгрыш</button>
+      <p class="hint">Ссылка на розыгрыш теперь показывает победителей всем, кто по ней перейдёт.</p>
+    </div>
+  </div>
+
 </div>
+
+<footer class="site">
+  <a href="oferta.html">Оферта</a> |
+  <a href="privacy.html">Политика конфиденциальности</a> |
+  <a href="terms.html">Условия использования</a> |
+  <a href="contacts.html">Контакты</a> |
+  <a href="requisites.html">Реквизиты</a>
+</footer>
 
 <script>
 const API = "https://tanyatats-vybor-backend-e396.twc1.net";
+const SITE = location.origin + location.pathname.replace(/create\.html$/,'');
 
-function getCode(){
-  const p = new URLSearchParams(location.search);
-  return p.get('r') || p.get('code') || '';
-}
-const code = getCode();
+let currentCode = null;
+let currentCert = null;
+let pollTimer = null;
 
-// ===== Роутинг: есть ?r= → форма участия; иначе → лендинг =====
-if(code){
-  document.getElementById('app').classList.add('active');
-  showState('loading');
-  loadDraw();
-} else {
-  document.getElementById('landing').classList.add('active');
-  initLanding();
+function show(s){
+  document.querySelectorAll('.state').forEach(x=>x.classList.remove('active'));
+  document.getElementById('state-'+s).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
-function showState(state){
-  document.querySelectorAll('#app .state').forEach(s=>s.classList.remove('active'));
-  document.getElementById('state-'+state).classList.add('active');
+// навбар-тень
+window.addEventListener('scroll', ()=>{
+  const nav=document.getElementById('nav');
+  if(window.scrollY>20) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+});
+
+document.getElementById('createBtn').addEventListener('click', async ()=>{
+  const title = document.getElementById('title').value.trim();
+  const winners = parseInt(document.getElementById('winners').value||'1',10);
+  const reserves = parseInt(document.getElementById('reserves').value||'0',10);
+  const msg = document.getElementById('createMsg'); msg.className='msg';
+  const btn = document.getElementById('createBtn');
+  btn.disabled = true; btn.textContent = 'Создаю…';
+  try{
+    const res = await fetch(`${API}/api/reg-draws`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({title: title||null, winners_count:winners, reserve_count:reserves})
+    });
+    if(!res.ok) throw new Error('fail');
+    const d = await res.json();
+    currentCode = d.code;
+    openManage(d.title);
+  }catch(e){
+    btn.disabled=false; btn.textContent='Создать розыгрыш →';
+    msg.classList.add('err'); msg.textContent='Не удалось создать. Проверь связь и попробуй ещё раз.';
+  }
+});
+
+function participantLink(code){
+  return SITE + 'r.html?r=' + code;
 }
 
-async function loadDraw(){
+function openManage(title){
+  if(title){ document.getElementById('mgTitle').innerHTML = title; }
+  const link = participantLink(currentCode);
+  document.getElementById('shareLink').value = link;
+
+  const box = document.getElementById('qrcode');
+  box.innerHTML = '';
+  try{
+    if(window.QRCode){
+      new QRCode(box, { text: link, width: 160, height: 160, colorDark:'#2b1a3d', colorLight:'#ffffff' });
+    }
+  }catch(e){}
+
+  show('manage');
+  startPolling();
+}
+
+async function refreshCount(){
+  if(!currentCode) return;
+  try{
+    const res = await fetch(`${API}/api/reg-draws/${currentCode}`);
+    const d = await res.json();
+    document.getElementById('liveCount').textContent = d.participants_count;
+    if(d.status === 'completed'){ stopPolling(); }
+  }catch(e){}
+}
+function startPolling(){ stopPolling(); refreshCount(); pollTimer = setInterval(refreshCount, 5000); }
+function stopPolling(){ if(pollTimer){ clearInterval(pollTimer); pollTimer=null; } }
+
+document.getElementById('refreshBtn').addEventListener('click', refreshCount);
+
+document.getElementById('copyLink').addEventListener('click', async ()=>{
+  try{ await navigator.clipboard.writeText(document.getElementById('shareLink').value);
+    document.getElementById('copyLink').textContent='Скопировано';
+    setTimeout(()=>document.getElementById('copyLink').textContent='Копировать',1500);
+  }catch(e){ document.getElementById('shareLink').select(); document.execCommand('copy'); }
+});
+
+document.getElementById('drawBtn').addEventListener('click', ()=>{
+  document.getElementById('drawBtn').style.display = 'none';
+  document.getElementById('emailBlock').style.display = 'block';
+});
+
+document.getElementById('payBtn').addEventListener('click', async ()=>{
+  const email = document.getElementById('emailInput').value.trim();
+  if(!email || !email.includes('@')){
+    document.getElementById('mgMsg').className = 'msg err';
+    document.getElementById('mgMsg').textContent = 'Введите корректный email';
+    return;
+  }
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.textContent = 'Создаю платёж…';
+  stopPolling();
+  try{
+    const res = await fetch(`${API}/api/reg-draws/${currentCode}/pay`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, return_url: SITE + 'create.html?draw=' + currentCode })
+    });
+    if(!res.ok) throw new Error('pay failed');
+    const payment = await res.json();
+    if(payment.confirmation && payment.confirmation.confirmation_url){
+      window.location.href = payment.confirmation.confirmation_url;
+    } else {
+      throw new Error('no url');
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Оплатить 149 ₽ и провести розыгрыш';
+    document.getElementById('mgMsg').className = 'msg err';
+    document.getElementById('mgMsg').textContent = 'Ошибка платежа. Попробуйте позже.';
+    startPolling();
+  }
+});
+
+async function handlePaidDraw(code){
+  currentCode = code;
   try{
     const res = await fetch(`${API}/api/reg-draws/${code}`);
-    if(!res.ok){ showState('error'); return; }
     const d = await res.json();
-    if(d.status === 'open'){
-      document.getElementById('drawTitle').textContent = d.title || 'Розыгрыш';
-      document.getElementById('pCount').textContent = d.participants_count;
-      showState('form');
-    } else if(d.status === 'completed'){
-      document.getElementById('closedTitle').textContent = 'Розыгрыш завершён';
-      let msg = 'Розыгрыш уже проведён.';
-      if(d.result && d.result.winners){ msg = 'Победители: ' + d.result.winners.map(w=>'@'+w).join(', '); }
-      document.getElementById('closedMsg').textContent = msg;
-      showState('closed');
-    } else {
-      document.getElementById('closedTitle').textContent = 'Регистрация закрыта';
-      document.getElementById('closedMsg').textContent = 'Организатор закрыл приём участников. Скоро итоги!';
-      showState('closed');
-    }
-  }catch(e){ showState('error'); }
-}
-
-const joinBtn = document.getElementById('joinBtn');
-if(joinBtn){
-  joinBtn.addEventListener('click', async ()=>{
-    const raw = document.getElementById('username').value.trim().replace(/^@/,'');
-    const msg = document.getElementById('formMsg');
-    msg.className = 'msg';
-    if(!raw || !/^[A-Za-z0-9._]{1,30}$/.test(raw)){
-      msg.classList.add('err');
-      msg.textContent = 'Введи корректный ник (латиница, цифры, точка, _).';
-      return;
-    }
-    joinBtn.disabled = true; joinBtn.textContent = 'Записываю…';
-    try{
-      const res = await fetch(`${API}/api/reg-draws/${code}/register`, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({instagram_username: raw})
-      });
-      if(res.status === 409){
-        document.getElementById('closedTitle').textContent = 'Регистрация закрыта';
-        document.getElementById('closedMsg').textContent = 'Приём участников уже завершён.';
-        showState('closed'); return;
+    if(d.payment_status === 'paid' || d.status === 'completed'){
+      if(d.result && d.result.winners){
+        currentCert = d.result;
+        showResult(d.result, d.participants_count);
+        return;
       }
-      if(!res.ok) throw new Error('fail');
-      const d = await res.json();
-      document.getElementById('pCountDone').textContent = d.participants_count;
-      document.getElementById('doneMsg').textContent = d.already
-        ? 'Ты уже был(а) записан(а) — участвуешь один раз. Удачи!'
-        : 'Ты участвуешь в розыгрыше. Победителя объявит организатор.';
-      showState('done');
-    }catch(e){
-      joinBtn.disabled = false; joinBtn.textContent = 'Участвовать 🎉';
-      msg.classList.add('err');
-      msg.textContent = 'Не удалось записаться. Попробуй ещё раз через секунду.';
+      const runRes = await fetch(`${API}/api/reg-draws/${code}/run`, { method:'POST' });
+      const runData = await runRes.json();
+      currentCert = runData.certificate;
+      showResult(runData.result, runData.participants_count);
+    } else if(d.payment_status === 'pending'){
+      document.getElementById('mgTitle').textContent = 'Оплата обрабатывается';
+      document.getElementById('liveCount').textContent = d.participants_count;
+      show('manage');
+      document.getElementById('drawBtn').style.display = 'none';
+      document.getElementById('emailBlock').style.display = 'none';
+      document.getElementById('mgMsg').className = 'msg';
+      document.getElementById('mgMsg').textContent = 'Ожидайте подтверждения оплаты (обычно несколько секунд).';
+      const pollPaid = setInterval(async ()=>{
+        const sRes = await fetch(`${API}/api/reg-draws/${code}`);
+        const sData = await sRes.json();
+        if(sData.payment_status === 'paid' || sData.status === 'completed'){
+          clearInterval(pollPaid);
+          handlePaidDraw(code);
+        }
+      }, 3000);
+      setTimeout(()=>clearInterval(pollPaid), 60000);
     }
-  });
-
-  document.getElementById('username').addEventListener('keydown', e=>{
-    if(e.key === 'Enter') joinBtn.click();
-  });
-}
-
-// ===== Лендинг: конфетти, навбар, scroll-reveal, FAQ =====
-function initLanding(){
-  const colors = ['#ff4d8f','#c159f5','#ff85b3','#d68af8','#ffd9e8'];
-  const box = document.getElementById('confetti');
-  if(box){
-    const n = window.innerWidth < 700 ? 14 : 26;
-    for(let i=0;i<n;i++){
-      const d = document.createElement('span');
-      d.className = 'dot';
-      d.style.left = Math.random()*100 + '%';
-      d.style.top = (60 + Math.random()*40) + '%';
-      d.style.background = colors[i % colors.length];
-      d.style.animationDuration = (5 + Math.random()*6) + 's';
-      d.style.animationDelay = (Math.random()*6) + 's';
-      const s = 6 + Math.random()*8;
-      d.style.width = s+'px'; d.style.height = s+'px';
-      box.appendChild(d);
-    }
+  } catch(e) {
+    document.getElementById('mgMsg').className = 'msg err';
+    document.getElementById('mgMsg').textContent = 'Не удалось проверить оплату. Попробуйте обновить страницу.';
   }
-
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', ()=>{
-    if(window.scrollY > 20) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
-  });
-
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach((e,i)=>{
-      if(e.isIntersecting){
-        setTimeout(()=> e.target.classList.add('in'), i*120);
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold:.2 });
-  document.querySelectorAll('.step').forEach(s=>io.observe(s));
-
-  document.querySelectorAll('.faq-q').forEach(q=>{
-    q.addEventListener('click', ()=>{
-      const item = q.parentElement;
-      const a = item.querySelector('.faq-a');
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(op=>{
-        op.classList.remove('open');
-        op.querySelector('.faq-a').style.maxHeight = null;
-      });
-      if(!isOpen){
-        item.classList.add('open');
-        a.style.maxHeight = a.scrollHeight + 'px';
-      }
-    });
-  });
 }
+
+(()=>{
+  const params = new URLSearchParams(location.search);
+  const drawCode = params.get('draw');
+  if(drawCode){
+    handlePaidDraw(drawCode);
+  }
+})();
+
+function showResult(result, count){
+  document.getElementById('resultLead').textContent =
+    `Из ${count} участников честно выбраны победители.`;
+  const wrap = document.getElementById('tickets'); wrap.innerHTML='';
+  result.winners.forEach((u,i)=>{
+    const t=document.createElement('div'); t.className='ticket';
+    t.innerHTML=`<div class="rank">Победитель ${i+1}</div><div class="name">@${u}</div>`;
+    wrap.appendChild(t);
+  });
+  (result.reserves||[]).forEach((u,i)=>{
+    const t=document.createElement('div'); t.className='ticket reserve';
+    t.innerHTML=`<div class="rank">Запасной ${i+1}</div><div class="name">@${u}</div>`;
+    wrap.appendChild(t);
+  });
+  show('result');
+}
+
+document.getElementById('copyResult').addEventListener('click', async ()=>{
+  if(!currentCert) return;
+  const w = currentCert.result.winners.map(u=>'@'+u).join(', ');
+  const text = `Победители розыгрыша: ${w}\nПроверено Vybor — честный розыгрыш.`;
+  try{ await navigator.clipboard.writeText(text);
+    document.getElementById('copyResult').textContent='Скопировано ✓';
+  }catch(e){}
+});
+
+document.getElementById('certBtn').addEventListener('click', ()=>{
+  if(!currentCert) return;
+  const blob = new Blob([JSON.stringify(currentCert,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='vybor-sertifikat.json'; a.click();
+});
+
+document.getElementById('newBtn').addEventListener('click', ()=>location.reload());
 </script>
 
 <!-- Yandex.Metrika counter -->
