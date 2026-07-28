@@ -10,21 +10,20 @@
   a{ color: #c159f5; }
   h1{ font-size: 24px; }
   h2{ font-size: 20px; margin-top: 24px; }
-  .placeholder{ color: #8b7fa3; font-style: italic; background: #f6f1fb; padding: 2px 6px; border-radius: 4px; }
+  .ph{ background:#f6f1fb; padding:1px 6px; border-radius:4px; color:#8b7fa3; font-style:italic; }
+  .box{ background:#f6f1fb; border-radius:12px; padding:8px 20px; margin-top:16px; }
 </style>
 </head>
 <body>
   <h1>Реквизиты продавца</h1>
-
-  <h2>Самозанятый</h2>
-  <p><strong>ФИО:</strong> <span id="name">Ваши Фамилия Имя Отчество</span></p>
-  <p><strong>ИНН:</strong> <span id="inn">XXXXXXXXXXXX</span></p>
-  <!-- Ниже можно добавить расчётный счёт и банк, если подключён приём на карту -->
-  <!-- <p><strong>Расчётный счёт:</strong> <span id="account">Номер счёта</span></p>
-  <p><strong>Банк:</strong> <span id="bank">Наименование банка, БИК, корр. счёт</span></p> -->
-
-  <p style="margin-top:30px;"><em>Реквизиты предоставляются в электронном чеке после оплаты согласно 54-ФЗ. Эта страница носит ознакомительный характер.</em></p>
-
+  <h2>Самозанятый (плательщик НПД)</h2>
+  <div class="box">
+    <p><strong>ФИО:</strong> <span class="ph">Жигалкина Татьяна Сергеевна</span></p>
+    <p><strong>ИНН:</strong> <span class="ph">262706574572</span></p>
+    <p><strong>Email:</strong> <span class="ph">tzhighalkina80@gmail.com</span></p>
+    <p><strong>Налоговый режим:</strong> Налог на профессиональный доход (НПД)</p>
+  </div>
+  <p style="margin-top:24px;"><em>Услуги оказываются самозанятым в соответствии с Федеральным законом от 27.11.2018 №422-ФЗ. Чек в электронной форме направляется покупателю после каждой оплаты. Условия оказания услуг изложены в <a href="oferta.html">Публичной оферте</a>.</em></p>
   <p><a href="index.html">← Вернуться на главную</a></p>
 
 <!-- Yandex.Metrika counter -->
@@ -35,7 +34,6 @@
         for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
         k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
     })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111067223', 'ym');
-
     ym(111067223, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/111067223" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
