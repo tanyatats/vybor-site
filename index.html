@@ -67,6 +67,10 @@
     box-shadow:0 8px 20px -8px rgba(255,77,143,.6); transition:transform .2s;
   }
   .nav-cta:hover{ transform:translateY(-2px); }
+  .nav-right{ display:flex; align-items:center; gap:22px; }
+  .nav-link{ font-family:'Unbounded'; font-weight:500; font-size:14px; color:var(--dim); transition:color .2s; }
+  .nav-link:hover{ color:var(--pink); }
+  @media (max-width:600px){ .nav-link{ display:none; } }
 
   /* Герой */
   .hero{
@@ -266,7 +270,10 @@
       <span class="mark"><svg viewBox="0 0 32 32" fill="none"><path d="M6 8 L16 24 L26 8" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       <span class="word">Vy<b>bor</b></span>
     </a>
-    <a href="create.html" class="nav-cta">Создать розыгрыш</a>
+    <div class="nav-right">
+      <a href="generator.html" class="nav-link">Генератор</a>
+      <a href="create.html" class="nav-cta">Создать розыгрыш</a>
+    </div>
   </nav>
 
   <header class="hero" id="top">
