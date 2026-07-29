@@ -176,6 +176,23 @@
   .feat .fico{ font-size:19px; }
 
   /* FAQ */
+  /* Блок цены */
+  .price-wrap{ display:flex; justify-content:center; margin-top:8px; }
+  .price-card{ background:var(--card); border:1px solid var(--line); border-radius:26px; padding:44px 40px; box-shadow:var(--shadow-lg); text-align:center; max-width:440px; width:100%; position:relative; overflow:hidden; }
+  .price-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:var(--grad); }
+  .price-badge{ display:inline-block; background:var(--bg-tint); color:var(--purple); font-family:'JetBrains Mono'; font-size:12px; font-weight:600; padding:7px 16px; border-radius:999px; letter-spacing:.05em; margin-bottom:20px; }
+  .price-num{ font-family:'Unbounded'; font-weight:900; font-size:72px; line-height:1; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .price-per{ color:var(--dim); font-size:16px; margin:10px 0 4px; }
+  .price-sub{ color:var(--dim); font-size:14px; margin-bottom:28px; }
+  .price-feats{ text-align:left; margin:0 0 30px; padding:0; list-style:none; }
+  .price-feats li{ display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); font-size:15px; color:var(--text); }
+  .price-feats li:last-child{ border-bottom:none; }
+  .price-feats .chk{ flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--grad); display:grid; place-items:center; margin-top:1px; }
+  .price-feats .chk svg{ width:12px; height:12px; }
+  .price-btn{ display:inline-block; width:100%; padding:17px; border-radius:15px; background:var(--grad); color:#fff; font-family:'Unbounded'; font-weight:600; font-size:17px; box-shadow:0 12px 28px -8px rgba(255,77,143,.6); transition:transform .2s; }
+  .price-btn:hover{ transform:translateY(-2px); text-decoration:none; }
+  .price-note{ margin-top:18px; font-size:13px; color:var(--dim); line-height:1.5; }
+
   .faq-list{ max-width:780px; margin:0 auto; }
   .faq-item{ border:1px solid var(--line); border-radius:18px; background:#fff; margin-bottom:14px; overflow:hidden; box-shadow:var(--shadow); }
   .faq-q{
@@ -322,6 +339,30 @@
     </div>
   </section>
 
+  <section class="block" id="price">
+    <div class="section-head">
+      <span class="tag">Цена</span>
+      <h2>Честно и <em>просто</em>: 149 ₽ за розыгрыш</h2>
+    </div>
+    <div class="price-wrap">
+      <div class="price-card">
+        <span class="price-badge">БЕЗ ПОДПИСКИ</span>
+        <div class="price-num">149 ₽</div>
+        <div class="price-per">за один розыгрыш</div>
+        <div class="price-sub">Платишь только когда проводишь. Никаких ежемесячных списаний.</div>
+        <ul class="price-feats">
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Неограниченное число участников</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Сколько угодно победителей и запасных</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Защита от накрутки через Telegram</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Сертификат честности с результатом</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Сбор участников — бесплатно</li>
+        </ul>
+        <a href="create.html" class="price-btn">Создать розыгрыш →</a>
+        <p class="price-note">Оплата разовая, через ЮKassa, с чеком. Регистрация участников не тарифицируется — платишь только за проведение.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="faq">
     <div class="section-head">
       <span class="tag">Вопросы</span>
@@ -347,6 +388,22 @@
       <div class="faq-item">
         <button class="faq-q">Можно выбрать несколько победителей? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div class="faq-a"><p>Да. При создании розыгрыша указываешь любое число победителей и запасных — на случай, если основной победитель не выйдет на связь.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Чем Vybor лучше бесплатных ботов для выбора комментариев? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="faq-a"><p>Бесплатные боты просто вытаскивают случайный комментарий — они не отсекают накрутку и не оставляют доказательства. Vybor фиксирует список участников до старта, отсеивает ботов через вход по Telegram и выдаёт сертификат честности, который видят подписчики. Разница в том, что вашему результату можно верить, а не просто поверить на слово.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Можно ли повлиять на выбор победителя? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="faq-a"><p>Нет — и в этом весь смысл. Победителя выбирает криптографический генератор случайных чисел, а не человек. Список участников фиксируется до выбора, поэтому подкрутить результат невозможно ни организатору, ни сервису.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Розыгрыши в Instagram по комментариям всё ещё работают? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="faq-a"><p>Да, розыгрыши остаются одним из самых эффективных способов роста аудитории. Но подписчики стали недоверчивее, поэтому выигрывают те, кто проводит их прозрачно. Честный розыгрыш с доказательством результата вызывает больше доверия и вовлечённости, чем «победитель — @username, поздравляю».</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Как сделать, чтобы новые подписчики не отписывались после розыгрыша? <svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="faq-a"><p>Главное — разыгрывать приз, интересный именно вашей аудитории, а не всем подряд. Если приз связан с вашей темой, придут те, кому интересен ваш контент, и они останутся. Универсальные призы вроде денег или техники приводят охотников за халявой, которые отписываются сразу после итогов.</p></div>
       </div>
     </div>
   </section>
