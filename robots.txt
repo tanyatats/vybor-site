@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tanyatats.github.io/vybor-site/sitemap.xml
