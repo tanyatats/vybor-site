@@ -151,6 +151,9 @@
   .section-head h2{ font-family:'Unbounded'; font-weight:800; font-size:clamp(30px,5vw,52px); letter-spacing:-.02em; margin:12px 0 0; line-height:1.1; }
   .section-head h2 em{ font-style:normal; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
 
+  /* Блог — сетка под любое число карточек */
+  #blog .steps{ grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); }
+
   /* Как работает — 3 шага */
   .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
   .step{
@@ -428,6 +431,11 @@
         <span class="ico">💬</span>
         <h3>Розыгрыш по комментариям</h3>
         <p>Как собрать участников, отсеять накрутку и не утонуть в выгрузке комментариев вручную.</p>
+      </a>
+      <a href="blog-rozygrysh-v-telegram.html" class="step" style="cursor:pointer; text-decoration:none;">
+        <span class="ico">✈️</span>
+        <h3>Розыгрыш в Telegram-канале</h3>
+        <p>Как провести розыгрыш через бота: проверить подписку, отсечь накрутку и честно выбрать победителя.</p>
       </a>
     </div>
   </section>
