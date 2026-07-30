@@ -2,14 +2,14 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Генератор случайных чисел онлайн — Vybor | Честный выбор победителя</title>
-<meta name="description" content="Бесплатный генератор случайных чисел и случайного выбора из списка. Криптографическая случайность прямо в браузере — для честных розыгрышей и конкурсов.">
-<meta name="keywords" content="генератор случайных чисел, рандомайзер, случайное число онлайн, выбрать победителя, генератор для розыгрыша, случайный выбор из списка">
+<title>Рандомайзер онлайн — числа, список, колесо фортуны | Vybor</title>
+<meta name="description" content="Бесплатный рандомайзер онлайн: генератор случайных чисел, случайный выбор из списка, колесо фортуны и монетка. Честная криптографическая случайность прямо в браузере, без регистрации.">
+<meta name="keywords" content="рандомайзер, рандомайзер чисел, рандомайзер онлайн, генератор случайных чисел, рандомайзер для розыгрыша, рандомайзер колесо, колесо фортуны, случайный выбор из списка, рандомайзер имён, рандомайзер бесплатно, рандомайзер без регистрации">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ff4d8f%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c159f5%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2226%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M26%2030%20L50%2072%20L74%2030%22%20stroke%3D%22white%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22/%3E%3C/svg%3E">
 <link rel="canonical" href="https://tanyatats.github.io/vybor-site/generator.html">
-<meta property="og:title" content="Генератор случайных чисел онлайн — Vybor">
-<meta property="og:description" content="Бесплатный честный генератор случайных чисел и выбора из списка.">
+<meta property="og:title" content="Рандомайзер онлайн — числа, список, колесо фортуны | Vybor">
+<meta property="og:description" content="Бесплатный рандомайзер: числа, выбор из списка, колесо фортуны. Честная случайность в браузере.">
 <meta property="og:url" content="https://tanyatats.github.io/vybor-site/generator.html">
 <meta property="og:image" content="https://tanyatats.github.io/vybor-site/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,11 +18,22 @@
 {
   "@context":"https://schema.org",
   "@type":"WebApplication",
-  "name":"Генератор случайных чисел Vybor",
+  "name":"Рандомайзер онлайн Vybor",
   "applicationCategory":"UtilitiesApplication",
   "operatingSystem":"Any",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"},
-  "description":"Бесплатный генератор случайных чисел и случайного выбора из списка с криптографической случайностью."
+  "description":"Бесплатный рандомайзер: генератор случайных чисел, выбор из списка, колесо фортуны и монетка с криптографической случайностью."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Что такое рандомайзер?","acceptedAnswer":{"@type":"Answer","text":"Рандомайзер — это инструмент случайного выбора: он выдаёт случайное число из диапазона, выбирает случайный элемент из списка или крутит колесо фортуны. Используется для розыгрышей, игр, жеребьёвок и любых честных случайных решений."}},
+    {"@type":"Question","name":"Честный ли этот рандомайзер чисел?","acceptedAnswer":{"@type":"Answer","text":"Да. Инструмент использует криптографический источник случайности браузера (crypto), а не предсказуемый псевдослучайный код, поэтому результат нельзя предугадать или подкрутить."}},
+    {"@type":"Question","name":"Можно ли пользоваться рандомайзером бесплатно и без регистрации?","acceptedAnswer":{"@type":"Answer","text":"Да, рандомайзер полностью бесплатный и работает прямо в браузере без регистрации. Все вычисления происходят на вашем устройстве."}}
+  ]
 }
 </script>
 <style>
@@ -41,7 +52,6 @@
   html,body{ margin:0; padding:0; }
   body{ background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; min-height:100vh; }
   a{ color:inherit; text-decoration:none; }
-
   .nav{ position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px 6vw; background:rgba(253,252,255,.72); backdrop-filter:blur(14px); border-bottom:1px solid transparent; transition:border-color .3s, box-shadow .3s; }
   .nav.scrolled{ border-color:var(--line); box-shadow:0 4px 24px -16px rgba(150,90,200,.4); }
   .brand{ display:inline-flex; align-items:center; gap:10px; }
@@ -64,66 +74,53 @@
   .page-head .tag{ font-family:'JetBrains Mono'; font-size:13px; color:var(--purple); font-weight:600; letter-spacing:.1em; text-transform:uppercase; }
   .page-head h1{ font-family:'Unbounded'; font-weight:900; letter-spacing:-.02em; line-height:1.02; font-size:clamp(32px,6.5vw,56px); margin:14px 0 0; }
   .page-head h1 em{ font-style:normal; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .page-head p.lead{ color:var(--dim); font-size:17px; line-height:1.55; margin:16px auto 0; max-width:460px; }
-
-  .how{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:28px; opacity:0; animation:fadeUp .7s .18s forwards; }
-  .how-step{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:22px 18px; text-align:center; box-shadow:var(--shadow); }
-  .how-step .hn{ width:34px; height:34px; margin:0 auto 12px; border-radius:10px; background:var(--grad); color:#fff; font-family:'Unbounded'; font-weight:700; font-size:16px; display:grid; place-items:center; box-shadow:0 6px 14px -5px rgba(255,77,143,.55); }
-  .how-step h4{ font-family:'Unbounded'; font-weight:600; font-size:15px; margin:0 0 6px; letter-spacing:-.01em; }
-  .how-step p{ color:var(--dim); font-size:13.5px; line-height:1.5; margin:0; }
-  @media (max-width:560px){ .how{ grid-template-columns:1fr; gap:12px; } }
-  @keyframes fadeUp{ from{ opacity:0; transform:translateY(28px);} to{ opacity:1; transform:translateY(0);} }
+  .page-head p.lead{ color:var(--dim); font-size:17px; line-height:1.55; margin:16px auto 0; max-width:480px; }
 
   .card{ background:var(--card); border:1px solid var(--line); border-radius:26px; padding:32px; box-shadow:var(--shadow-lg); opacity:0; animation:fadeUp .7s .25s forwards; }
-
-  .tabs{ display:flex; gap:8px; background:var(--bg-tint); padding:6px; border-radius:16px; margin-bottom:26px; }
-  .tab{ flex:1; padding:12px; border:none; background:none; border-radius:11px; font-family:'Unbounded'; font-weight:500; font-size:14px; color:var(--dim); cursor:pointer; transition:.2s; }
+  .tabs{ display:flex; gap:6px; background:var(--bg-tint); padding:6px; border-radius:16px; margin-bottom:26px; flex-wrap:wrap; }
+  .tab{ flex:1 1 auto; min-width:90px; padding:12px 10px; border:none; background:none; border-radius:11px; font-family:'Unbounded'; font-weight:500; font-size:13px; color:var(--dim); cursor:pointer; transition:.2s; }
   .tab.active{ background:#fff; color:var(--ink); box-shadow:0 4px 12px -6px rgba(150,90,200,.4); }
+
+  .pane{ display:none; }
+  .pane.active{ display:block; }
 
   label.fld{ display:block; font-size:13px; color:var(--dim); font-weight:600; margin:0 0 8px; }
   input[type=number],textarea{ width:100%; padding:15px 16px; border:1.5px solid var(--line); border-radius:14px; font-size:16px; font-family:'Inter'; color:var(--ink); background:var(--bg-tint); transition:.2s; }
   input:focus,textarea:focus{ outline:none; border-color:var(--pink); background:#fff; box-shadow:0 0 0 4px rgba(255,77,143,.12); }
   textarea{ min-height:130px; resize:vertical; line-height:1.5; }
-  .two{ display:flex; gap:16px; margin-bottom:22px; }
+  .two{ display:flex; gap:16px; }
   .two > div{ flex:1; }
-  .row-count{ display:flex; align-items:center; gap:12px; margin:18px 0 22px; }
-  .row-count label{ margin:0; }
-  .row-count input{ width:90px; }
 
-  button.gen{ width:100%; padding:18px; border:none; border-radius:15px; background:var(--grad); color:#fff; font-family:'Unbounded'; font-weight:600; font-size:17px; cursor:pointer; box-shadow:0 12px 28px -8px rgba(255,77,143,.6); transition:transform .2s, box-shadow .2s; }
-  button.gen:hover{ transform:translateY(-2px); box-shadow:0 18px 36px -10px rgba(255,77,143,.7); }
-  button.gen:active{ transform:translateY(0); }
+  .go{ width:100%; margin-top:22px; padding:17px; border:none; border-radius:15px; background:var(--grad); color:#fff; font-family:'Unbounded'; font-weight:600; font-size:17px; cursor:pointer; box-shadow:0 12px 28px -8px rgba(255,77,143,.6); transition:transform .2s; }
+  .go:hover{ transform:translateY(-2px); }
 
-  .result{ margin-top:26px; text-align:center; min-height:10px; }
-  .result .big{ font-family:'Unbounded'; font-weight:900; font-size:clamp(48px,14vw,96px); line-height:1; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; animation:pop .4s cubic-bezier(.2,1.4,.4,1); }
-  @keyframes pop{ from{ transform:scale(.5); opacity:0;} to{ transform:scale(1); opacity:1;} }
-  .result .winners{ display:flex; flex-direction:column; gap:12px; }
-  .win-card{ background:linear-gradient(160deg,#fff,#fdf4fa); border:1.5px solid var(--line-strong); border-radius:16px; padding:16px 20px; box-shadow:0 4px 18px -8px rgba(150,90,200,.25); animation:pop .4s cubic-bezier(.2,1.4,.4,1); }
-  .win-card .rank{ font-family:'JetBrains Mono'; font-size:11px; color:var(--dim); letter-spacing:.1em; text-transform:uppercase; }
-  .win-card .name{ font-family:'Unbounded'; font-weight:700; font-size:22px; margin-top:4px; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; word-break:break-word; }
-  .err{ color:var(--pink); font-size:14px; margin-top:16px; }
-  .again{ margin-top:18px; background:none; border:none; color:var(--purple); font-family:'Inter'; font-weight:600; font-size:14px; cursor:pointer; text-decoration:underline; }
+  .result{ margin-top:26px; text-align:center; min-height:40px; }
+  .result .big{ font-family:'Unbounded'; font-weight:900; font-size:clamp(44px,12vw,80px); line-height:1; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .result .winners{ display:flex; flex-direction:column; gap:8px; align-items:center; }
+  .result .winner{ font-family:'Unbounded'; font-weight:700; font-size:22px; padding:10px 22px; border-radius:12px; background:var(--bg-tint); }
 
-  .trust{ margin-top:20px; text-align:center; font-size:12.5px; color:var(--dim); line-height:1.6; }
-  .trust b{ color:var(--ink); }
+  /* Колесо */
+  .wheel-box{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .wheel-wrap{ position:relative; width:280px; height:280px; }
+  .wheel-pointer{ position:absolute; top:-6px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent; border-top:24px solid var(--pink); z-index:3; filter:drop-shadow(0 2px 3px rgba(0,0,0,.2)); }
+  #wheel{ width:280px; height:280px; border-radius:50%; box-shadow:var(--shadow-lg); transition:transform 4s cubic-bezier(.17,.67,.2,1); }
 
-  /* SEO-текст под инструментом */
-  .seo{ position:relative; z-index:1; max-width:720px; margin:0 auto; padding:20px 20px 40px; }
-  .seo h2{ font-family:'Unbounded'; font-weight:700; font-size:24px; margin:36px 0 12px; letter-spacing:-.01em; }
-  .seo h3{ font-family:'Unbounded'; font-weight:600; font-size:18px; margin:26px 0 8px; }
-  .seo p{ color:#4b3d5e; font-size:16px; line-height:1.7; margin:0 0 14px; }
-  .seo ul{ color:#4b3d5e; font-size:16px; line-height:1.7; padding-left:22px; }
-  .seo li{ margin:6px 0; }
-  .seo .promo{ background:var(--bg-tint); border-radius:18px; padding:26px 28px; margin:30px 0; text-align:center; }
-  .seo .promo h3{ margin-top:0; }
-  .seo .promo a{ display:inline-block; margin-top:12px; padding:14px 30px; border-radius:14px; background:var(--grad); color:#fff; font-family:'Unbounded'; font-weight:600; font-size:15px; box-shadow:0 10px 24px -8px rgba(255,77,143,.6); }
+  .hint{ margin-top:20px; padding:16px 18px; background:var(--bg-tint); border-radius:14px; font-size:13.5px; color:var(--dim); line-height:1.6; }
+  .hint b{ color:var(--ink); }
 
-  footer.site{ position:relative; z-index:1; border-top:1px solid var(--line); padding:40px 6vw; text-align:center; color:var(--dim); font-size:13px; line-height:1.9; margin-top:30px; }
+  /* Текстовый SEO-блок */
+  .seo{ position:relative; z-index:1; max-width:720px; margin:20px auto 0; padding:0 20px 40px; }
+  .seo h2{ font-family:'Unbounded'; font-weight:800; font-size:26px; margin:40px 0 14px; letter-spacing:-.01em; }
+  .seo h3{ font-family:'Unbounded'; font-weight:600; font-size:19px; margin:28px 0 10px; }
+  .seo p{ font-size:16px; line-height:1.7; color:#4b3d5e; margin:0 0 16px; }
+  .seo .cta-line{ display:inline-block; margin-top:6px; font-family:'Unbounded'; font-weight:600; color:var(--purple); }
+  .faq-q{ font-family:'Unbounded'; font-weight:600; font-size:17px; margin:22px 0 6px; }
+
+  footer.site{ position:relative; z-index:1; border-top:1px solid var(--line); padding:40px 6vw; text-align:center; color:var(--dim); font-size:13px; line-height:1.9; }
   footer.site a{ color:var(--purple); margin:0 4px; }
-  footer.site a:hover{ text-decoration:underline; }
 
-  @media (max-width:560px){ .wrap{ padding:110px 16px 40px; } .card{ padding:24px 20px; } }
-  @media (prefers-reduced-motion:reduce){ *{ animation-duration:.001s !important; animation-iteration-count:1 !important; } html{ scroll-behavior:auto; } }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(28px);} to{ opacity:1; transform:translateY(0);} }
+  @media (prefers-reduced-motion:reduce){ *{ animation-duration:.001s !important; } html{ scroll-behavior:auto; } #wheel{ transition:none; } }
 </style>
 </head>
 <body>
@@ -141,36 +138,20 @@
 <div class="wrap">
   <div class="page-head">
     <span class="tag">Бесплатный инструмент</span>
-    <h1>Генератор <em>случайных</em> чисел</h1>
-    <p class="lead">Случайное число или случайный победитель из списка — честно, прямо в браузере, без регистрации.</p>
-  </div>
-
-  <div class="how">
-    <div class="how-step">
-      <div class="hn">1</div>
-      <h4>Выбери режим</h4>
-      <p>Случайное число из диапазона или случайный победитель из списка участников.</p>
-    </div>
-    <div class="how-step">
-      <div class="hn">2</div>
-      <h4>Введи данные</h4>
-      <p>Укажи числа «от» и «до» — или вставь список ников, по одному в строке.</p>
-    </div>
-    <div class="how-step">
-      <div class="hn">3</div>
-      <h4>Получи результат</h4>
-      <p>Жми кнопку — выбор мгновенный и честный. Можно повторять сколько угодно раз.</p>
-    </div>
+    <h1>Рандомайзер <em>онлайн</em></h1>
+    <p class="lead">Случайное число, случайный победитель из списка или колесо фортуны — честно, прямо в браузере, без регистрации.</p>
   </div>
 
   <div class="card">
     <div class="tabs">
-      <button class="tab active" id="tab-num" onclick="switchTab('num')">случайное число</button>
-      <button class="tab" id="tab-list" onclick="switchTab('list')">выбор из списка</button>
+      <button class="tab active" data-pane="num">Число</button>
+      <button class="tab" data-pane="list">Из списка</button>
+      <button class="tab" data-pane="wheel">Колесо</button>
+      <button class="tab" data-pane="coin">Да / Нет</button>
     </div>
 
-    <!-- Число -->
-    <div id="pane-num">
+    <!-- Режим: число -->
+    <div class="pane active" id="pane-num">
       <div class="two">
         <div>
           <label class="fld">От</label>
@@ -181,136 +162,221 @@
           <input type="number" id="max" value="100">
         </div>
       </div>
-      <button class="gen" onclick="genNumber()">Сгенерировать число</button>
+      <button class="go" id="goNum">Сгенерировать число</button>
+      <div class="result" id="resNum"></div>
     </div>
 
-    <!-- Список -->
-    <div id="pane-list" style="display:none;">
+    <!-- Режим: список -->
+    <div class="pane" id="pane-list">
       <label class="fld">Участники — по одному в строке (ники, имена, номера)</label>
-      <textarea id="names" placeholder="anna_k&#10;maxim.travel&#10;kate2024&#10;… вставь список участников"></textarea>
-      <div class="row-count">
-        <label class="fld">Сколько победителей:</label>
-        <input type="number" id="pickCount" value="1" min="1">
+      <textarea id="listInput" placeholder="@anna&#10;@ivan&#10;@maria&#10;@pavel"></textarea>
+      <div class="two" style="margin-top:16px; align-items:flex-end;">
+        <div>
+          <label class="fld">Сколько победителей</label>
+          <input type="number" id="winnersCount" value="1" min="1">
+        </div>
+        <div style="flex:2;">
+          <button class="go" id="goList" style="margin-top:0;">Выбрать победителя</button>
+        </div>
       </div>
-      <button class="gen" onclick="genFromList()">Выбрать победителя</button>
+      <div class="result" id="resList"></div>
     </div>
 
-    <div class="result" id="result"></div>
-
-    <div class="trust">
-      🔒 Используется <b>криптографическая случайность</b> браузера (crypto), а не обычный псевдослучайный код. Результат нельзя предсказать или подкрутить.
+    <!-- Режим: колесо -->
+    <div class="pane" id="pane-wheel">
+      <label class="fld">Варианты — по одному в строке (2–12)</label>
+      <textarea id="wheelInput" placeholder="Пицца&#10;Суши&#10;Бургер&#10;Паста"></textarea>
+      <button class="go" id="buildWheel" style="margin-bottom:20px;">Собрать колесо</button>
+      <div class="wheel-box" id="wheelBox" style="display:none;">
+        <div class="wheel-wrap">
+          <div class="wheel-pointer"></div>
+          <canvas id="wheel" width="280" height="280"></canvas>
+        </div>
+        <button class="go" id="spinWheel" style="max-width:220px;">Крутить 🎡</button>
+        <div class="result" id="resWheel"></div>
+      </div>
     </div>
+
+    <!-- Режим: да/нет -->
+    <div class="pane" id="pane-coin">
+      <p style="text-align:center; color:var(--dim); font-size:15px; margin:0 0 8px;">Быстрый случайный ответ: да или нет, орёл или решка.</p>
+      <button class="go" id="goCoin">Бросить 🪙</button>
+      <div class="result" id="resCoin"></div>
+    </div>
+
+    <div class="hint">🔒 Используется <b>криптографическая случайность</b> браузера (crypto), а не обычный псевдослучайный код. Результат нельзя предсказать или подкрутить.</div>
   </div>
 </div>
 
-<!-- SEO-текст -->
-<article class="seo">
-  <h2>Честный генератор случайных чисел для розыгрышей</h2>
-  <p>Этот инструмент подходит и для простого выбора случайного числа, и для определения победителя конкурса в Instagram* или Telegram. В отличие от многих онлайн-рандомайзеров, здесь используется криптографический источник случайности браузера — тот же класс алгоритмов, что применяется в безопасности, — поэтому результат по-настоящему непредсказуем.</p>
+<div class="seo">
+  <h2>Честный рандомайзер для розыгрышей, игр и жеребьёвок</h2>
+  <p>Это универсальный рандомайзер онлайн: он подойдёт и для простого выбора случайного числа, и для определения победителя конкурса в Instagram* или Telegram, и для игр, где нужно случайно выбрать вариант. В отличие от многих онлайн-рандомайзеров, здесь используется криптографический источник случайности браузера — тот же класс алгоритмов, что применяется в безопасности, — поэтому результат по-настоящему непредсказуем.</p>
 
-  <h3>Как выбрать случайное число</h3>
-  <p>Укажите диапазон «от» и «до» и нажмите кнопку. Инструмент вернёт одно случайное целое число из этого диапазона, включая границы. Подходит для жеребьёвок, игр, распределения очереди и любых ситуаций, где нужен честный случайный выбор.</p>
+  <h3>Рандомайзер чисел</h3>
+  <p>Укажите диапазон «от» и «до» и нажмите кнопку — рандомайзер вернёт одно случайное целое число из этого диапазона, включая границы. Подходит для жеребьёвок, игр, распределения очереди, лотерей и любых ситуаций, где нужен честный случайный выбор числа.</p>
 
-  <h3>Как выбрать победителя из списка</h3>
-  <p>Переключитесь на вкладку «выбор из списка», вставьте участников — по одному в строке — и укажите, сколько победителей нужно. Инструмент случайно выберет нужное количество без повторов. Список можно скопировать прямо из комментариев или таблицы.</p>
+  <h3>Случайный выбор из списка</h3>
+  <p>Переключитесь на вкладку «Из списка», вставьте участников — по одному в строке — и укажите, сколько победителей нужно. Рандомайзер случайно выберет нужное количество без повторов. Список можно скопировать прямо из комментариев или таблицы — удобно для розыгрышей по именам и никам.</p>
 
-  <div class="promo">
-    <h3>Нужен розыгрыш с доказательством честности?</h3>
-    <p>Генератор выше — для быстрого выбора. Если розыгрыш публичный и важно доказать подписчикам, что всё честно, Vybor фиксирует список участников до старта и выдаёт сертификат с результатом.</p>
-    <a href="create.html">Создать честный розыгрыш →</a>
-  </div>
+  <h3>Колесо фортуны</h3>
+  <p>Впишите варианты, соберите колесо и крутаните — стрелка укажет на случайный сектор. Наглядный способ сделать выбор весёлым: что приготовить, куда пойти, кто ходит первым, какой фильм посмотреть.</p>
+
+  <h3>Нужен розыгрыш с доказательством честности?</h3>
+  <p>Рандомайзер выше — для быстрого выбора здесь и сейчас. Если розыгрыш публичный и важно доказать подписчикам, что всё честно, Vybor фиксирует список участников до старта и выдаёт сертификат с результатом, который может проверить любой.</p>
+  <a href="create.html" class="cta-line">Создать честный розыгрыш →</a>
 
   <h3>Почему обычный «рандом» бывает нечестным</h3>
   <p>Многие простые генераторы используют предсказуемый псевдослучайный алгоритм, а в розыгрышах вручную честность вообще невозможно проверить: подписчики видят только объявленного победителя. Настоящая честность — это когда список зафиксирован заранее и выбор нельзя переиграть. Именно так работает полноценный розыгрыш на Vybor.</p>
-</article>
+
+  <h2>Частые вопросы о рандомайзере</h2>
+  <div class="faq-q">Что такое рандомайзер?</div>
+  <p>Рандомайзер — это инструмент случайного выбора: он выдаёт случайное число из диапазона, выбирает случайный элемент из списка или крутит колесо фортуны. Его используют для розыгрышей, игр, жеребьёвок и любых честных случайных решений.</p>
+
+  <div class="faq-q">Честный ли этот рандомайзер чисел?</div>
+  <p>Да. Инструмент использует криптографический источник случайности браузера (crypto), а не предсказуемый псевдослучайный код, поэтому результат нельзя предугадать или подкрутить.</p>
+
+  <div class="faq-q">Можно ли пользоваться рандомайзером бесплатно и без регистрации?</div>
+  <p>Да, рандомайзер полностью бесплатный и работает прямо в браузере без регистрации. Все вычисления происходят на вашем устройстве, данные никуда не отправляются.</p>
+
+  <div class="faq-q">Как выбрать победителя розыгрыша рандомайзером?</div>
+  <p>Вставьте участников в режиме «Из списка», укажите число победителей и нажмите кнопку. Для публичного розыгрыша, где важна доказуемая честность, лучше провести его через <a href="create.html">Vybor</a> — с фиксацией списка и сертификатом.</p>
+
+  <p style="margin-top:30px;"><a href="index.html" class="cta-line">← На главную</a> &nbsp; <a href="blog-chestnyy-rozygrysh.html" class="cta-line">Читать блог о розыгрышах →</a></p>
+</div>
 
 <footer class="site">
   <a href="index.html">Главная</a> |
-  <a href="generator.html">Генератор</a> |
+  <a href="generator.html">Рандомайзер</a> |
   <a href="blog-chestnyy-rozygrysh.html">Блог</a> |
   <a href="oferta.html">Оферта</a> |
   <a href="privacy.html">Политика конфиденциальности</a> |
-  <a href="terms.html">Условия использования</a> |
-  <a href="contacts.html">Контакты</a> |
-  <a href="requisites.html">Реквизиты</a>
+  <a href="contacts.html">Контакты</a>
   <p style="max-width:720px;margin:18px auto 0;font-size:11px;line-height:1.5;color:#b3a8c4;">* Instagram принадлежит компании Meta, признанной судом в РФ экстремистской организацией и запрещённой на территории России.</p>
 </footer>
 
 <script>
-// навбар-тень
+// Криптографическая случайность: целое [0, n)
+function randInt(n){
+  const buf = new Uint32Array(1);
+  crypto.getRandomValues(buf);
+  return buf[0] % n;
+}
+function randBetween(min, max){
+  return min + randInt(max - min + 1);
+}
+
+// Навбар
 window.addEventListener('scroll', ()=>{
-  const nav=document.getElementById('nav');
-  if(window.scrollY>20) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+  const nav = document.getElementById('nav');
+  if(window.scrollY > 20) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
 });
 
-function switchTab(which){
-  const isNum = which==='num';
-  document.getElementById('tab-num').classList.toggle('active', isNum);
-  document.getElementById('tab-list').classList.toggle('active', !isNum);
-  document.getElementById('pane-num').style.display = isNum ? 'block':'none';
-  document.getElementById('pane-list').style.display = isNum ? 'none':'block';
-  document.getElementById('result').innerHTML = '';
-}
+// Вкладки
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.pane').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('pane-' + t.dataset.pane).classList.add('active');
+  });
+});
 
-// Криптографически честное случайное целое в диапазоне [min, max]
-function secureRandomInt(min, max){
-  const range = max - min + 1;
-  const maxUint = 0xFFFFFFFF;
-  const limit = maxUint - (maxUint % range); // отбрасываем хвост, чтобы не было перекоса
-  const buf = new Uint32Array(1);
-  let x;
-  do { crypto.getRandomValues(buf); x = buf[0]; } while(x >= limit);
-  return min + (x % range);
-}
+// Режим: число
+document.getElementById('goNum').addEventListener('click', ()=>{
+  let min = parseInt(document.getElementById('min').value, 10);
+  let max = parseInt(document.getElementById('max').value, 10);
+  if(isNaN(min) || isNaN(max)){ return; }
+  if(min > max){ const t = min; min = max; max = t; }
+  const res = randBetween(min, max);
+  document.getElementById('resNum').innerHTML = '<div class="big">' + res + '</div>';
+});
 
-function genNumber(){
-  const min = parseInt(document.getElementById('min').value, 10);
-  const max = parseInt(document.getElementById('max').value, 10);
-  const box = document.getElementById('result');
-  if(!Number.isFinite(min) || !Number.isFinite(max)){
-    box.innerHTML = '<div class="err">Введите оба числа.</div>'; return;
-  }
-  if(min > max){
-    box.innerHTML = '<div class="err">«От» не может быть больше «До».</div>'; return;
-  }
-  const n = secureRandomInt(min, max);
-  box.innerHTML = '<div class="big">'+n+'</div>' +
-    '<button class="again" onclick="genNumber()">Сгенерировать ещё раз</button>';
-}
-
-function genFromList(){
-  const raw = document.getElementById('names').value;
-  const box = document.getElementById('result');
-  const items = raw.split('\n').map(s=>s.trim()).filter(Boolean);
-  let count = parseInt(document.getElementById('pickCount').value, 10);
-  if(items.length === 0){
-    box.innerHTML = '<div class="err">Вставьте список участников.</div>'; return;
-  }
-  if(!Number.isFinite(count) || count < 1) count = 1;
-  if(count > items.length){
-    box.innerHTML = '<div class="err">Победителей больше, чем участников ('+items.length+').</div>'; return;
-  }
-  // случайная выборка без повторов (Fisher–Yates на крипто-случайности)
-  const pool = items.slice();
+// Режим: список
+document.getElementById('goList').addEventListener('click', ()=>{
+  const lines = document.getElementById('listInput').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  let k = parseInt(document.getElementById('winnersCount').value, 10) || 1;
+  const box = document.getElementById('resList');
+  if(lines.length === 0){ box.innerHTML = '<p style="color:var(--dim)">Добавьте участников в список.</p>'; return; }
+  if(k > lines.length) k = lines.length;
+  const pool = lines.slice();
   const winners = [];
-  for(let i=0;i<count;i++){
-    const idx = secureRandomInt(0, pool.length-1);
+  for(let i=0;i<k;i++){
+    const idx = randInt(pool.length);
     winners.push(pool.splice(idx,1)[0]);
   }
-  let html = '<div class="winners">';
-  winners.forEach((w,i)=>{
-    html += '<div class="win-card"><div class="rank">Победитель '+(i+1)+'</div><div class="name">'+escapeHtml(w)+'</div></div>';
-  });
-  html += '</div><button class="again" onclick="genFromList()">Выбрать заново</button>';
-  box.innerHTML = html;
+  box.innerHTML = '<div class="winners">' + winners.map(w=>'<div class="winner">🏆 ' + w + '</div>').join('') + '</div>';
+});
+
+// Режим: да/нет
+document.getElementById('goCoin').addEventListener('click', ()=>{
+  const yes = randInt(2) === 0;
+  document.getElementById('resCoin').innerHTML = '<div class="big">' + (yes ? 'Да' : 'Нет') + '</div>';
+});
+
+// Режим: колесо
+const COLORS = ['#ff4d8f','#c159f5','#ff85b3','#d68af8','#ffb0cf','#b57cf0','#ff6fa3','#9d6ee8'];
+let wheelItems = [];
+let wheelAngle = 0;
+
+function drawWheel(){
+  const c = document.getElementById('wheel');
+  const ctx = c.getContext('2d');
+  const cx = 140, cy = 140, r = 138;
+  const n = wheelItems.length;
+  const arc = (Math.PI * 2) / n;
+  ctx.clearRect(0,0,280,280);
+  for(let i=0;i<n;i++){
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, i*arc, (i+1)*arc);
+    ctx.closePath();
+    ctx.fillStyle = COLORS[i % COLORS.length];
+    ctx.fill();
+    // текст
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(i*arc + arc/2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#fff';
+    ctx.font = '600 13px Inter, sans-serif';
+    let label = wheelItems[i];
+    if(label.length > 12) label = label.slice(0,11) + '…';
+    ctx.fillText(label, r - 14, 5);
+    ctx.restore();
+  }
 }
 
-function escapeHtml(s){
-  return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
+document.getElementById('buildWheel').addEventListener('click', ()=>{
+  const items = document.getElementById('wheelInput').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(items.length < 2){
+    document.getElementById('resWheel').innerHTML = '<p style="color:var(--dim)">Добавьте минимум 2 варианта.</p>';
+    return;
+  }
+  wheelItems = items.slice(0, 12);
+  wheelAngle = 0;
+  const c = document.getElementById('wheel');
+  c.style.transform = 'rotate(0deg)';
+  document.getElementById('wheelBox').style.display = 'flex';
+  document.getElementById('resWheel').innerHTML = '';
+  drawWheel();
+});
+
+document.getElementById('spinWheel').addEventListener('click', ()=>{
+  const n = wheelItems.length;
+  if(n < 2) return;
+  const winIdx = randInt(n);
+  const arcDeg = 360 / n;
+  // Центр выигрышного сектора должен встать под стрелку (вверху)
+  const target = 360 * 6 + (360 - (winIdx * arcDeg + arcDeg/2)) - 90;
+  wheelAngle = target;
+  const c = document.getElementById('wheel');
+  c.style.transform = 'rotate(' + wheelAngle + 'deg)';
+  document.getElementById('resWheel').innerHTML = '';
+  setTimeout(()=>{
+    document.getElementById('resWheel').innerHTML = '<div class="winner">🎯 ' + wheelItems[winIdx] + '</div>';
+  }, 4100);
+});
 </script>
-
-<script src="cookie.js" defer></script>
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -324,5 +390,6 @@ function escapeHtml(s){
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/111067223" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+<script src="cookie.js" defer></script>
 </body>
 </html>
