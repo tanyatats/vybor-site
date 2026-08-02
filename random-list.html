@@ -197,8 +197,8 @@
   <a href="create.html" class="upsell">
     <div class="upsell-ic">🏆</div>
     <div class="upsell-txt">
-      <div class="upsell-h">Выбираешь победителя конкурса среди подписчиков?</div>
-      <div class="upsell-p">Ты вставил список вручную — но подписчики не видят, что ты не убрал неугодных и не подкрутил результат. <b>Честный розыгрыш Vybor</b>: участники регистрируются сами, список фиксируется хешем до старта, а победителя подтверждает сертификат. <b>149 ₽</b>, платишь только когда проводишь.</div>
+      <div class="upsell-h">Не хочешь вставлять ники вручную?</div>
+      <div class="upsell-p">Собирать список из комментариев, вычищать ботов, копировать ники — долго и муторно. <b>Vybor соберёт участников сам</b>: скинул ссылку — они регистрируются, сервис выбирает победителя за тебя. И вдобавок выдаёт сертификат, которому поверят подписчики. <b>149 ₽</b>, платишь только когда проводишь.</div>
     </div>
     <div class="upsell-arrow">→</div>
   </a>
@@ -329,7 +329,7 @@ document.getElementById('goList').addEventListener('click', ()=>{
   const pool=lines.slice(), winners=[];
   for(let i=0;i<k;i++){ const idx=randInt(pool.length); winners.push(pool.splice(idx,1)[0]); }
   box.innerHTML='<div class="winners">'+winners.map(w=>'<div class="winner">🏆 '+w+'</div>').join('')+'</div>'+
-    '<a href="create.html" class="res-nudge">Это розыгрыш для подписчиков? Проведи его так, чтобы поверили — с сертификатом честности →</a>';
+    '<a href="create.html" class="res-nudge">Розыгрыш для подписчиков? Не собирай список вручную — Vybor сделает всё сам →</a>';
   fireConfetti();
 });
 </script>
