@@ -304,10 +304,84 @@
   .state{ display:none; }
   .state.active{ display:block; }
 
+  .rnd-card{
+    display:flex; align-items:center; gap:16px; text-align:left;
+    max-width:520px; margin:26px auto 0; padding:18px 22px;
+    background:#fff; border:1.5px solid var(--line-strong);
+    border-radius:20px; box-shadow:var(--shadow);
+    text-decoration:none; color:var(--ink);
+    opacity:0; animation:fadeUp .8s .8s forwards;
+    transition:transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .rnd-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lg); border-color:var(--purple); }
+  .rnd-emoji{ font-size:34px; line-height:1; flex-shrink:0; }
+  .rnd-text{ display:flex; flex-direction:column; gap:3px; flex:1; }
+  .rnd-title{ font-family:'Unbounded'; font-weight:700; font-size:17px; }
+  .rnd-sub{ font-size:13.5px; color:var(--dim); line-height:1.4; }
+  .rnd-arrow{ font-size:24px; color:var(--purple); flex-shrink:0; font-weight:700; }
+
+  /* ==== МЕНЮ ==== */
+  .menu{ display:flex; align-items:center; gap:26px; }
+  .menu-link{ font-family:'Inter'; font-weight:600; font-size:15px; color:var(--ink); position:relative; padding:6px 0; transition:color .2s; }
+  .menu-link:hover{ color:var(--purple); }
+  .menu-link.accent-link{ color:var(--pink); }
+  .has-sub{ position:relative; }
+  .caret{ font-size:11px; }
+  .sub{ position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%) translateY(6px); background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow-lg); padding:8px; min-width:210px; opacity:0; visibility:hidden; transition:.2s; }
+  .has-sub:hover .sub{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+  .sub-link{ display:block; padding:11px 14px; border-radius:10px; font-size:14.5px; font-weight:500; color:var(--ink); transition:.15s; }
+  .sub-link:hover{ background:var(--bg-tint); color:var(--purple); }
+  .burger{ display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; z-index:60; }
+  .burger span{ width:24px; height:2.5px; background:var(--ink); border-radius:2px; transition:.3s; }
+  .burger.active span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
+  .burger.active span:nth-child(2){ opacity:0; }
+  .burger.active span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
+
+  /* ==== ВИТРИНА РАНДОМАЙЗЕРОВ ==== */
+  .tools-sec{ position:relative; z-index:2; max-width:1000px; margin:0 auto; padding:20px 6vw 30px; }
+  .tools-head{ text-align:center; margin-bottom:26px; }
+  .tools-head h2{ font-family:'Unbounded'; font-weight:800; font-size:clamp(24px,4vw,34px); letter-spacing:-.01em; margin:0 0 8px; }
+  .tools-head p{ color:var(--dim); font-size:15px; margin:0; }
+  .tools-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .tool-card{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; padding:26px 16px; background:#fff; border:1.5px solid var(--line); border-radius:20px; box-shadow:var(--shadow); transition:transform .2s, box-shadow .2s, border-color .2s; }
+  .tool-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); border-color:var(--purple); }
+  .tool-card .ic{ font-size:36px; line-height:1; }
+  .tool-card .tt{ font-family:'Unbounded'; font-weight:600; font-size:15px; }
+  .tool-card .ds{ font-size:12.5px; color:var(--dim); line-height:1.4; }
+  .tools-note{ text-align:center; margin-top:16px; font-size:13px; color:var(--dim); }
+
   @media (max-width:820px){
-    .steps{ grid-template-columns:1fr; }
-    .hero-stats{ gap:28px; }
-    .nav{ padding:16px 5vw; }
+    .tools-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+
+  @media (max-width:860px){
+    .burger{ display:flex; }
+    .menu{ position:fixed; top:0; right:-100%; width:76%; max-width:320px; height:100vh; flex-direction:column; align-items:stretch; gap:0; background:#fff; box-shadow:-10px 0 40px -10px rgba(150,90,200,.3); padding:90px 26px 30px; transition:right .3s; overflow-y:auto; }
+    .menu.open{ right:0; }
+    .menu-link{ padding:15px 0; border-bottom:1px solid var(--line); font-size:17px; }
+    .has-sub .sub{ position:static; transform:none; opacity:1; visibility:visible; box-shadow:none; border:none; padding:0 0 0 12px; min-width:0; max-height:0; overflow:hidden; transition:max-height .3s; }
+    .has-sub.open .sub{ max-height:340px; }
+    .sub-link{ padding:13px 10px; font-size:15.5px; }
+    .nav-cta{ margin-top:18px; text-align:center; }
+    .sub-toggle .caret{ float:right; }
+  }
+
+  @media (max-width:820px){
+  @media (max-width:480px){
+    .hero{ padding:104px 5vw 64px; }
+    .hero h1{ font-size:clamp(30px,10vw,44px); line-height:1.08; word-break:break-word; }
+    .hero p.sub{ font-size:15px; }
+    .hero-actions{ gap:12px; }
+    .btn-primary, .btn-ghost{ width:100%; }
+    .hero-stats{ gap:20px; flex-wrap:wrap; }
+    .rnd-card{ padding:15px 16px; gap:12px; margin-top:22px; }
+    .rnd-emoji{ font-size:28px; }
+    .rnd-title{ font-size:15.5px; }
+    .rnd-sub{ font-size:12.5px; }
+    /* блобы не должны распирать узкий экран */
+    .blob.b1{ width:340px; height:340px; left:-140px; }
+    .blob.b2{ width:300px; height:300px; right:-120px; }
+    .blob.b3{ width:280px; height:280px; }
   }
   @media (prefers-reduced-motion:reduce){
     *{ animation-duration:.001s !important; animation-iteration-count:1 !important; }
@@ -324,10 +398,20 @@
       <span class="mark"><svg viewBox="0 0 32 32" fill="none"><path d="M6 8 L16 24 L26 8" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       <span class="word">vy<b>bor</b></span>
     </a>
-    <div class="nav-right">
-      <a href="#blog" class="nav-link">Блог</a>
-      <a href="generator.html" class="nav-link">Рандомайзер</a>
-      <a href="create.html" class="nav-cta">Создать розыгрыш</a>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    <div class="menu" id="menu">
+      <div class="has-sub">
+        <a href="generator.html" class="menu-link sub-toggle">Рандомайзеры <span class="caret">▾</span></a>
+        <div class="sub">
+          <a href="random-number.html" class="sub-link">Случайное число</a>
+          <a href="random-list.html" class="sub-link">Выбор из списка</a>
+          <a href="wheel.html" class="sub-link">Колесо фортуны</a>
+          <a href="coin.html" class="sub-link">Орёл или решка</a>
+        </div>
+      </div>
+      <a href="create.html" class="menu-link accent-link">Честный розыгрыш</a>
+      <a href="#blog" class="menu-link">Блог</a>
+      <a href="create.html" class="nav-cta">Провести розыгрыш</a>
     </div>
   </nav>
 
@@ -356,6 +440,36 @@
       </div>
     </div>
   </header>
+
+  <section class="tools-sec">
+    <div class="tools-head">
+      <h2>Бесплатные рандомайзеры</h2>
+      <p>Выбери случайно прямо сейчас — без регистрации и оплаты</p>
+    </div>
+    <div class="tools-grid">
+      <a href="random-number.html" class="tool-card">
+        <span class="ic">🔢</span>
+        <span class="tt">Случайное число</span>
+        <span class="ds">Число в любом диапазоне</span>
+      </a>
+      <a href="random-list.html" class="tool-card">
+        <span class="ic">📝</span>
+        <span class="tt">Выбор из списка</span>
+        <span class="ds">Победитель из имён и ников</span>
+      </a>
+      <a href="wheel.html" class="tool-card">
+        <span class="ic">🎡</span>
+        <span class="tt">Колесо фортуны</span>
+        <span class="ds">Крути и выбирай вариант</span>
+      </a>
+      <a href="coin.html" class="tool-card">
+        <span class="ic">🪙</span>
+        <span class="tt">Орёл или решка</span>
+        <span class="ds">Быстрый ответ да / нет</span>
+      </a>
+    </div>
+    <p class="tools-note">Проводишь розыгрыш для подписчиков? Обычного рандома мало — нужен <a href="create.html" style="color:var(--purple);font-weight:600;">сертификат честности ↓</a></p>
+  </section>
 
   <section class="block" id="how">
     <div class="section-head">
@@ -552,6 +666,15 @@
 
 <script>
 const API = "https://tanyatats-vybor-backend-e396.twc1.net";
+
+// ===== Мобильное меню =====
+(function(){
+  const burger=document.getElementById('burger'), menu=document.getElementById('menu');
+  if(burger){ burger.addEventListener('click',()=>{ menu.classList.toggle('open'); burger.classList.toggle('active'); }); }
+  document.querySelectorAll('.has-sub > .sub-toggle').forEach(t=>{
+    t.addEventListener('click',(e)=>{ if(window.innerWidth<=860){ e.preventDefault(); t.parentElement.classList.toggle('open'); } });
+  });
+})();
 
 // ===== Конфетти-залп при объявлении победителей =====
 let _confCanvasEl = null, _confCtx = null, _confParticles = [], _confRAF = null;
