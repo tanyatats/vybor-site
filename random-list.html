@@ -2,16 +2,16 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Случайный выбор из списка — рандомайзер имён онлайн | Vybor</title>
-<meta name="description" content="Бесплатный рандомайзер: случайный выбор победителя из списка имён или ников. Вставьте участников, укажите число победителей — честный выбор без повторов.">
-<meta name="keywords" content="случайный выбор из списка, рандомайзер имён, рандомайзер списка, выбрать случайного из списка, рандомайзер участников, случайный выбор победителя, рандомайзер ников, выбор случайного имени">
+<title>Случайный выбор победителя из списка — рандомайзер имён для розыгрыша | Vybor</title>
+<meta name="description" content="Бесплатный рандомайзер имён: случайный выбор победителя из списка для розыгрыша, жеребьёвки или конкурса. Вставьте участников, укажите число победителей — честный выбор без повторов.">
+<meta name="keywords" content="случайный выбор из списка, рандомайзер имён, выбор победителя из списка, рандомайзер для розыгрыша, случайный выбор победителя, жеребьёвка онлайн, рандомайзер участников, выбрать победителя конкурса, рандомайзер ников, рандомайзер списка">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ff4d8f%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23c159f5%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2226%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M26%2030%20L50%2072%20L74%2030%22%20stroke%3D%22white%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22/%3E%3C/svg%3E">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="canonical" href="https://tanyatats.github.io/vybor-site/random-list.html">
-<meta property="og:title" content="Случайный выбор из списка — рандомайзер имён онлайн | Vybor">
+<meta property="og:title" content="Случайный выбор победителя из списка — рандомайзер имён для розыгрыша | Vybor">
 <meta property="og:description" content="Случайный выбор победителя из списка. Честно, без регистрации, прямо в браузере.">
 <meta property="og:url" content="https://tanyatats.github.io/vybor-site/random-list.html">
 <meta property="og:image" content="https://tanyatats.github.io/vybor-site/og-image.png">
@@ -151,6 +151,8 @@
   .upsell-arrow{ font-size:26px; font-weight:700; flex-shrink:0; }
   @media (max-width:480px){ .upsell{ padding:18px; gap:12px; } .upsell-ic{ font-size:28px; } .upsell-h{ font-size:15px; } .upsell-p{ font-size:12.5px; } }
 
+  .res-nudge{ display:block; margin:20px auto 0; max-width:400px; padding:14px 18px; background:var(--bg-tint); border:1px dashed var(--line-strong); border-radius:14px; font-size:13.5px; line-height:1.5; color:var(--purple); font-weight:600; transition:.2s; text-align:center; }
+  .res-nudge:hover{ background:#fff; border-color:var(--purple); }
 </style>
 </head>
 <body>
@@ -177,8 +179,8 @@
 <div class="wrap">
   <div class="page-head">
     <span class="tag">Бесплатно · без регистрации</span>
-    <h1>Случайный <em>выбор из списка</em></h1>
-    <p class="lead">Вставьте участников — по одному в строке — и выберите победителя случайно, без повторов. Честно, прямо в браузере.</p>
+    <h1>Случайный выбор <em>победителя из списка</em></h1>
+    <p class="lead">Вставьте участников — по одному в строке — и выберите победителя розыгрыша случайно, без повторов. Честно, прямо в браузере, без регистрации.</p>
   </div>
 
   <div class="card">
@@ -195,8 +197,8 @@
   <a href="create.html" class="upsell">
     <div class="upsell-ic">🏆</div>
     <div class="upsell-txt">
-      <div class="upsell-h">Выбираешь победителя конкурса?</div>
-      <div class="upsell-p">Обычный рандом не докажет подписчикам, что ты не подкрутил. <b>Честный розыгрыш Vybor</b> фиксирует список хешем и выдаёт сертификат, который проверит любой.</div>
+      <div class="upsell-h">Выбираешь победителя конкурса среди подписчиков?</div>
+      <div class="upsell-p">Ты вставил список вручную — но подписчики не видят, что ты не убрал неугодных и не подкрутил результат. <b>Честный розыгрыш Vybor</b>: участники регистрируются сами, список фиксируется хешем до старта, а победителя подтверждает сертификат. <b>149 ₽</b>, платишь только когда проводишь.</div>
     </div>
     <div class="upsell-arrow">→</div>
   </a>
@@ -326,7 +328,8 @@ document.getElementById('goList').addEventListener('click', ()=>{
   if(k>lines.length) k=lines.length;
   const pool=lines.slice(), winners=[];
   for(let i=0;i<k;i++){ const idx=randInt(pool.length); winners.push(pool.splice(idx,1)[0]); }
-  box.innerHTML='<div class="winners">'+winners.map(w=>'<div class="winner">🏆 '+w+'</div>').join('')+'</div>';
+  box.innerHTML='<div class="winners">'+winners.map(w=>'<div class="winner">🏆 '+w+'</div>').join('')+'</div>'+
+    '<a href="create.html" class="res-nudge">Это розыгрыш для подписчиков? Проведи его так, чтобы поверили — с сертификатом честности →</a>';
   fireConfetti();
 });
 </script>
