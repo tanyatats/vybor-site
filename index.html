@@ -77,9 +77,9 @@
 
   /* Герой */
   .hero{
-    position:relative; min-height:100vh; display:flex; flex-direction:column;
+    position:relative; min-height:auto; display:flex; flex-direction:column;
     align-items:center; justify-content:center; text-align:center;
-    padding:120px 6vw 80px; overflow:hidden;
+    padding:116px 6vw 30px; overflow:hidden;
   }
   .hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; }
   .blob{ position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; }
@@ -350,8 +350,35 @@
   .tool-card .ds{ font-size:12.5px; color:var(--dim); line-height:1.4; }
   .tools-note{ text-align:center; margin-top:16px; font-size:13px; color:var(--dim); }
 
+  /* витрина внутри первого экрана */
+  .hero-tools{ max-width:820px; margin:36px auto 0; opacity:0; animation:fadeUp .8s .7s forwards; }
+
+  /* ==== КРЮЧОК к платному розыгрышу ==== */
+  .hook-sec{ position:relative; z-index:2; max-width:760px; margin:0 auto; padding:8px 6vw 20px; }
+  .hook{ display:flex; align-items:center; gap:18px; padding:22px 26px; border-radius:22px; background:var(--grad); color:#fff; box-shadow:0 20px 50px -18px rgba(255,77,143,.55); transition:transform .2s, box-shadow .2s; }
+  .hook:hover{ transform:translateY(-3px); box-shadow:0 26px 60px -18px rgba(255,77,143,.7); }
+  .hook-ic{ font-size:38px; flex-shrink:0; }
+  .hook-txt{ flex:1; }
+  .hook-h{ font-family:'Unbounded'; font-weight:700; font-size:18px; margin-bottom:5px; }
+  .hook-p{ font-size:13.5px; line-height:1.5; opacity:.96; }
+  .hook-p b{ font-weight:700; }
+  .hook-arrow{ font-size:28px; font-weight:700; flex-shrink:0; }
+  @media (max-width:480px){ .hook{ padding:18px; gap:12px; } .hook-ic{ font-size:30px; } .hook-h{ font-size:15.5px; } .hook-p{ font-size:12.5px; } }
+
+  /* ==== БЛОК "МЫ ВСЁ ДЕЛАЕМ САМИ" ==== */
+  .section-sub{ max-width:620px; margin:14px auto 0; color:var(--dim); font-size:15.5px; line-height:1.6; }
+  .auto-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; max-width:860px; margin:38px auto 0; }
+  .auto-card{ background:#fff; border:1px solid var(--line); border-radius:22px; padding:28px 26px; box-shadow:var(--shadow); }
+  .auto-card .auto-ic{ font-size:34px; display:block; margin-bottom:12px; }
+  .auto-card h3{ font-family:'Unbounded'; font-weight:600; font-size:18px; margin:0 0 8px; }
+  .auto-card p{ font-size:14.5px; line-height:1.6; color:#4b3d5e; margin:0; }
+  .auto-cta{ text-align:center; margin-top:36px; }
+  .auto-cta .btn-primary{ display:inline-block; }
+  .auto-note{ margin-top:14px; font-size:13px; color:var(--dim); }
+
   @media (max-width:820px){
     .tools-grid{ grid-template-columns:repeat(2,1fr); }
+    .auto-grid{ grid-template-columns:1fr; }
   }
 
   @media (max-width:860px){
@@ -422,53 +449,47 @@
     <div class="confetti" id="confetti"></div>
 
     <div class="hero-inner">
-      <span class="eyebrow"><span class="live-dot"></span> Честность подтверждается сертификатом</span>
+      <span class="eyebrow"><span class="live-dot"></span> Криптографическая случайность · честно</span>
       <h1>
-        <span class="l1">Розыгрыши,</span>
-        <span class="l2">которым верят</span>
+        <span class="l1">Рандомайзер</span>
+        <span class="l2">онлайн</span>
       </h1>
-      <p class="sub">Проведи розыгрыш в Instagram*, где победителя выбирает криптографический генератор — а не ты. Каждый результат можно проверить.</p>
-      <div class="hero-actions">
-        <a href="create.html"><button class="btn-primary">Создать розыгрыш — 149 ₽</button></a>
-        <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView()">Как это работает</button>
-      </div>
+      <p class="sub">Выбери победителя случайно и честно — число, имя из списка, колесо фортуны или монетка. Бесплатно, прямо в браузере, без регистрации.</p>
 
-      <div class="hero-stats">
-        <div class="stat"><div class="num">SHA-256</div><div class="lbl">фиксация списка</div></div>
-        <div class="stat"><div class="num">100%</div><div class="lbl">случайный выбор</div></div>
-        <div class="stat"><div class="num">149 ₽</div><div class="lbl">за розыгрыш</div></div>
+      <div class="tools-grid hero-tools">
+        <a href="random-number.html" class="tool-card">
+          <span class="ic">🔢</span>
+          <span class="tt">Случайное число</span>
+          <span class="ds">Число в любом диапазоне</span>
+        </a>
+        <a href="random-list.html" class="tool-card">
+          <span class="ic">📝</span>
+          <span class="tt">Выбор из списка</span>
+          <span class="ds">Победитель из имён и ников</span>
+        </a>
+        <a href="wheel.html" class="tool-card">
+          <span class="ic">🎡</span>
+          <span class="tt">Колесо фортуны</span>
+          <span class="ds">Крути и выбирай вариант</span>
+        </a>
+        <a href="coin.html" class="tool-card">
+          <span class="ic">🪙</span>
+          <span class="tt">Орёл или решка</span>
+          <span class="ds">Быстрый ответ да / нет</span>
+        </a>
       </div>
     </div>
   </header>
 
-  <section class="tools-sec">
-    <div class="tools-head">
-      <h2>Бесплатные рандомайзеры</h2>
-      <p>Выбери случайно прямо сейчас — без регистрации и оплаты</p>
-    </div>
-    <div class="tools-grid">
-      <a href="random-number.html" class="tool-card">
-        <span class="ic">🔢</span>
-        <span class="tt">Случайное число</span>
-        <span class="ds">Число в любом диапазоне</span>
-      </a>
-      <a href="random-list.html" class="tool-card">
-        <span class="ic">📝</span>
-        <span class="tt">Выбор из списка</span>
-        <span class="ds">Победитель из имён и ников</span>
-      </a>
-      <a href="wheel.html" class="tool-card">
-        <span class="ic">🎡</span>
-        <span class="tt">Колесо фортуны</span>
-        <span class="ds">Крути и выбирай вариант</span>
-      </a>
-      <a href="coin.html" class="tool-card">
-        <span class="ic">🪙</span>
-        <span class="tt">Орёл или решка</span>
-        <span class="ds">Быстрый ответ да / нет</span>
-      </a>
-    </div>
-    <p class="tools-note">Проводишь розыгрыш для подписчиков? Обычного рандома мало — нужен <a href="create.html" style="color:var(--purple);font-weight:600;">сертификат честности ↓</a></p>
+  <section class="hook-sec">
+    <a href="create.html" class="hook">
+      <div class="hook-ic">🏆</div>
+      <div class="hook-txt">
+        <div class="hook-h">Проводишь розыгрыш для подписчиков?</div>
+        <div class="hook-p">Обычный рандом не докажет, что ты не подкрутил. <b>Честный розыгрыш Vybor</b> фиксирует список хешем и выдаёт сертификат, который проверит любой.</div>
+      </div>
+      <div class="hook-arrow">→</div>
+    </a>
   </section>
 
   <section class="block" id="how">
@@ -511,6 +532,40 @@
         <a href="create.html" class="price-btn">Создать розыгрыш →</a>
         <p class="price-note">Оплата разовая, через ЮKassa, с чеком. Регистрация участников не тарифицируется — платишь только за проведение.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="block" id="auto">
+    <div class="section-head">
+      <span class="tag">Никакой рутины</span>
+      <h2>Тебе не нужно <em>ничего делать</em> руками</h2>
+      <p class="section-sub">С обычным рандомайзером всё вручную: собери комментарии, вычисти ботов, скопируй список, где-то сохрани, объяви победителя — и всё равно подписчики не поверят. Vybor делает всю работу за тебя.</p>
+    </div>
+    <div class="auto-grid">
+      <div class="auto-card">
+        <span class="auto-ic">🔗</span>
+        <h3>Участники регистрируются сами</h3>
+        <p>Просто поделись ссылкой или QR-кодом. Люди переходят и регистрируются в один тап — тебе не нужно вручную собирать ники из комментариев.</p>
+      </div>
+      <div class="auto-card">
+        <span class="auto-ic">🛡️</span>
+        <h3>Боты отсекаются автоматически</h3>
+        <p>Защита через Telegram отсеивает накрутку сама. Не нужно вручную проверять, кто настоящий участник, а кто фейк.</p>
+      </div>
+      <div class="auto-card">
+        <span class="auto-ic">🔒</span>
+        <h3>Список фиксируется сам</h3>
+        <p>Перед розыгрышем список запечатывается криптографическим хешем. Подменить или дописать участника после старта невозможно — и это видно всем.</p>
+      </div>
+      <div class="auto-card">
+        <span class="auto-ic">📜</span>
+        <h3>Сертификат генерируется сам</h3>
+        <p>После розыгрыша ты получаешь готовый сертификат честности с меткой времени. Публикуешь ссылку — и любой подписчик может проверить результат.</p>
+      </div>
+    </div>
+    <div class="auto-cta">
+      <a href="create.html" class="btn-primary">Провести розыгрыш за 149 ₽</a>
+      <p class="auto-note">Одна оплата, только когда проводишь. Сбор участников — бесплатно.</p>
     </div>
   </section>
 
