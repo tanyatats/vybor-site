@@ -914,8 +914,23 @@ function initLanding(){
   });
 }
 </script>
-
-<script src="cookie.js" defer></script>
+  <!-- Twemoji: одинаковые эмодзи на всех устройствах -->
+<script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', function(){
+    if(window.twemoji){
+      twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
+    }
+  });
+</script>
+<style>
+  img.emoji{
+    height: 1em; width: 1em;
+    margin: 0 .05em 0 .1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+  }
+</style>
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
